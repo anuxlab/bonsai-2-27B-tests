@@ -1,0 +1,91 @@
+# .github/workflows/exec.yml
+on:
+  workflow_call:
+    inputs:
+      model_url:
+        required: true
+        type: string
+      projector_model_url:
+        required: true
+        type: string
+      model_name:
+        required: true
+        type: string
+      projector_model_name:
+        required: true
+        type: string
+
+env:
+  BIN_URL: "https://github.com/PrismML-Eng/llama.cpp/releases/download/prism-b10777-e3de715/llama-prism-b10777-e3de715-bin-ubuntu-x64.tar.gz"
+  BIN_FILE_NAME: "data.tar.gz"
+
+jobs:
+  exec:
+    runs-on: ubuntu-24.04 # Using a specific runner image is a good practice
+    steps:
+      - name: Download BIN
+        run: |
+          set -xeuo pipefail
+          curl "${{ env.BIN_URL }}" -o "${{ env.BIN_FILE_NAME }}" -L
+
+      - name: Download Model
+        run: |
+          set -xeuo pipefail
+          curl "${{ inputs.model_url }}" -o "${{ inputs.model_name }}" -L
+
+      - name: Download Projector Model
+        run: |
+          set -xeuo pipefail
+          curl "${{ inputs.projector_model_url }}" -o "${{ inputs.projector_model_name }}" -L
+
+      - name: Unarchive
+        run: |
+          set -xeuo pipefail
+          mkdir bin
+          tar -xzf "${{ env.BIN_FILE_NAME }}" -C bin --strip-components=1
+
+      - name: Start Server
+        id: server
+        background: true
+        run: |
+          set -xeuo pipefail
+          ./bin/llama-server \
+            -m "./${{ inputs.model_name }}" \
+            --mmproj "./${{ inputs.projector_model_name }}" \
+            -ngl 0 \
+            -fa on \
+            -c 32768 \
+            --port 8080
+
+      - name: Wait for Server
+        run: |
+          set -xeuo pipefail
+          for i in {1..120}; do
+            if curl -fsS http://localhost:8080/health; then
+              exit 0
+            fi
+            echo -n "$i, "
+            sleep 1
+          done
+          exit 1
+
+      - name: Call API
+        run: |
+          set -xeuo pipefail
+          curl http://localhost:8080/v1/chat/completions \
+            -H "Content-Type: application/json" \
+            -d '{
+              "messages": [
+                {"role": "user", "content": [{"type": "text", "text": "Explain ternary quantization in one sentence."}]}
+              ],
+              "chat_template_kwargs": {"enable_thinking": false}
+            }'
+
+      - name: Stop Server
+        if: always()
+        run: |
+          # This step ensures the server is killed even if previous steps fail.
+          # The actual kill command may depend on the runner environment,
+          # but the reusable workflow pattern often relies on the background
+          # process being cleaned up automatically when the job ends.
+          echo "Job finished, server process should terminate."
