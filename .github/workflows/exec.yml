@@ -14,6 +14,10 @@ on:
       projector_model_name:
         required: true
         type: string
+      context_size:
+        required: false
+        type: string
+        default: "8192"   # Smaller default for CI
 
 env:
   BIN_URL: "https://github.com/PrismML-Eng/llama.cpp/releases/download/prism-b10777-e3de715/llama-prism-b10777-e3de715-bin-ubuntu-x64.tar.gz"
@@ -21,8 +25,16 @@ env:
 
 jobs:
   exec:
-    runs-on: ubuntu-24.04 # Using a specific runner image is a good practice
+    runs-on: ubuntu-24.04
     steps:
+      - name: Add swap space (safety net)
+        run: |
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          sudo swapon --show
+
       - name: Download BIN
         run: |
           set -xeuo pipefail
@@ -54,7 +66,8 @@ jobs:
             --mmproj "./${{ inputs.projector_model_name }}" \
             -ngl 0 \
             -fa on \
-            -c 32768 \
+            -c ${{ inputs.context_size }} \
+            -t 4 \
             --port 8080
 
       - name: Wait for Server
@@ -83,9 +96,4 @@ jobs:
 
       - name: Stop Server
         if: always()
-        run: |
-          # This step ensures the server is killed even if previous steps fail.
-          # The actual kill command may depend on the runner environment,
-          # but the reusable workflow pattern often relies on the background
-          # process being cleaned up automatically when the job ends.
-          echo "Job finished, server process should terminate."
+        run: echo "Job finished, server process should terminate."
