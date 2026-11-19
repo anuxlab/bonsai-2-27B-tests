@@ -4,13 +4,15 @@ on:
     branches: [ main ]
   workflow_dispatch: # Allows you to run it manually from the Actions tab
 
+# .github/workflows/call_27b.yml
 jobs:
   exec:
     name: Exec 27B
     uses: ./.github/workflows/exec.yml
-    secrets: inherit # Passes repository secrets to the reusable workflow
+    secrets: inherit
     with:
       model_name: "Ternary-Bonsai-2-27B-PQ2_0.gguf"
       projector_model_name: "Ternary-Bonsai-2-27B-mmproj-Q8_0.gguf"
       model_url: "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf/resolve/main/Ternary-Bonsai-2-27B-PQ2_0.gguf?download=true"
       projector_model_url: "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf/resolve/main/Ternary-Bonsai-2-27B-mmproj-Q8_0.gguf?download=true"
+      context_size: "8192"
