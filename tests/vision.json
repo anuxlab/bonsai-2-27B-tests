@@ -1,0 +1,25 @@
+[
+  {
+    "id": "vision-01",
+    "category": "image-understanding",
+    "prompt": {
+      "text": "Describe the main objects and scene in this image. Mention visible colors.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Fronalpstock_big.jpg/640px-Fronalpstock_big.jpg"
+    },
+    "min_words": 15,
+    "expected_contains": [
+      "mountain"
+    ]
+  },
+  {
+    "id": "vision-02",
+    "category": "visual-grounding",
+    "prompt": {
+      "text": "Is the image primarily an outdoor or indoor scene? Answer and give one visual clue.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Fronalpstock_big.jpg/640px-Fronalpstock_big.jpg"
+    },
+    "expected_contains": [
+      "outdoor"
+    ]
+  }
+]

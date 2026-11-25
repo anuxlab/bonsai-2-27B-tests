@@ -1,0 +1,44 @@
+[
+  {
+    "id": "code-01",
+    "category": "coding",
+    "prompt": "Write a Python function is_even(n) that returns True if n is even and False otherwise. Output code only.",
+    "code_required": true,
+    "expected_regex": "def\\s+is_even\\s*\\("
+  },
+  {
+    "id": "code-02",
+    "category": "coding",
+    "prompt": "Write a Python function that returns the factorial of a non-negative integer, handling 0. Include a ValueError for negative input. Code only.",
+    "code_required": true,
+    "expected_regex": "def\\s+\\w+\\s*\\(",
+    "expected_contains": [
+      "ValueError"
+    ]
+  },
+  {
+    "id": "code-03",
+    "category": "debugging",
+    "prompt": "Fix this Python function and output the corrected code only: def average(nums): return sum(nums) / len(nums)  It should return 0 for an empty list.",
+    "code_required": true,
+    "expected_contains": [
+      "return 0"
+    ]
+  },
+  {
+    "id": "code-04",
+    "category": "algorithm",
+    "prompt": "Implement binary search in Python for a sorted list. Return the index or -1. Code only.",
+    "code_required": true,
+    "expected_regex": "def\\s+\\w+\\s*\\(",
+    "expected_contains": [
+      "while"
+    ]
+  },
+  {
+    "id": "code-05",
+    "category": "explanation",
+    "prompt": "Explain the difference between a list and a tuple in Python, with one small example each.",
+    "min_words": 35
+  }
+]

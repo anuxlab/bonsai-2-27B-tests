@@ -1,0 +1,49 @@
+[
+  {
+    "id": "basic-01",
+    "category": "basic",
+    "prompt": "What is 7 × 8? Reply with only the number.",
+    "expected_contains": [
+      "56"
+    ]
+  },
+  {
+    "id": "basic-02",
+    "category": "basic",
+    "prompt": "In one sentence, explain what a CPU does.",
+    "min_words": 8
+  },
+  {
+    "id": "basic-03",
+    "category": "instruction-following",
+    "prompt": "Reply with exactly these three lines, no extra text:\nalpha\nbeta\ngamma",
+    "expected_contains": [
+      "alpha",
+      "beta",
+      "gamma"
+    ],
+    "expected_lines": [
+      "alpha",
+      "beta",
+      "gamma"
+    ]
+  },
+  {
+    "id": "basic-04",
+    "category": "instruction-following",
+    "prompt": "Return only valid JSON with keys 'status' and 'count', values 'ok' and 3.",
+    "json_required": true,
+    "json_keys": [
+      "status",
+      "count"
+    ]
+  },
+  {
+    "id": "basic-05",
+    "category": "knowledge",
+    "prompt": "What is the capital of Japan? Reply with the city only.",
+    "expected_contains": [
+      "Tokyo"
+    ]
+  }
+]

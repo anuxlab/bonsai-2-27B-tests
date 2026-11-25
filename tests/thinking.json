@@ -1,0 +1,42 @@
+[
+  {
+    "id": "think-01",
+    "category": "logic",
+    "prompt": "A farmer has 17 sheep. All but 9 run away. How many remain? Give a short explanation.",
+    "expected_contains": [
+      "9"
+    ]
+  },
+  {
+    "id": "think-02",
+    "category": "multi-step-math",
+    "prompt": "A notebook costs ₹40. A pen costs ₹15. If I buy 3 notebooks and 2 pens and pay ₹200, how much change do I get? Show calculation.",
+    "expected_contains": [
+      "150",
+      "50"
+    ]
+  },
+  {
+    "id": "think-03",
+    "category": "constraint-reasoning",
+    "prompt": "Schedule A, B, C in slots 1, 2, 3. A must be before C. B cannot be in slot 1. Give one valid ordering.",
+    "expected_contains": [
+      "A",
+      "C"
+    ]
+  },
+  {
+    "id": "think-04",
+    "category": "deduction",
+    "prompt": "All glips are zarns. Some zarns are mips. Does it follow that some glips are mips? Answer yes/no and explain.",
+    "expected_contains": [
+      "no"
+    ]
+  },
+  {
+    "id": "think-05",
+    "category": "planning",
+    "prompt": "You need to make tea, but the kettle is empty and the mug is dirty. List a sensible sequence of actions.",
+    "min_words": 20
+  }
+]
