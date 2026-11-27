@@ -1,42 +1,422 @@
 [
-  {
-    "id": "think-01",
-    "category": "logic",
-    "prompt": "A farmer has 17 sheep. All but 9 run away. How many remain? Give a short explanation.",
-    "expected_contains": [
-      "9"
-    ]
+ {
+  "id": "think-01",
+  "level": 1,
+  "category": "logic-trap",
+  "prompt": "A farmer has 17 sheep. All but 9 run away. How many sheep does the farmer have left?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 9
   },
-  {
-    "id": "think-02",
-    "category": "multi-step-math",
-    "prompt": "A notebook costs ₹40. A pen costs ₹15. If I buy 3 notebooks and 2 pens and pay ₹200, how much change do I get? Show calculation.",
-    "expected_contains": [
-      "150",
-      "50"
-    ]
+  "max_tokens": 700,
+  "est_out_tokens": 250,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 9",
+  "wrong": "ANSWER: 8"
+ },
+ {
+  "id": "think-02",
+  "level": 1,
+  "category": "multi-step-math",
+  "prompt": "A notebook costs ₹40 and a pen costs ₹15. I buy 3 notebooks and 2 pens and pay with a ₹200 note. How much change do I get (in rupees)?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 50
   },
-  {
-    "id": "think-03",
-    "category": "constraint-reasoning",
-    "prompt": "Schedule A, B, C in slots 1, 2, 3. A must be before C. B cannot be in slot 1. Give one valid ordering.",
-    "expected_contains": [
-      "A",
-      "C"
-    ]
+  "max_tokens": 700,
+  "est_out_tokens": 250,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 50",
+  "wrong": "ANSWER: 150"
+ },
+ {
+  "id": "think-03",
+  "level": 1,
+  "category": "rate-reasoning",
+  "prompt": "If 5 machines take 5 minutes to make 5 widgets, how many minutes would 100 machines take to make 100 widgets?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 5
   },
-  {
-    "id": "think-04",
-    "category": "deduction",
-    "prompt": "All glips are zarns. Some zarns are mips. Does it follow that some glips are mips? Answer yes/no and explain.",
-    "expected_contains": [
-      "no"
-    ]
+  "max_tokens": 700,
+  "est_out_tokens": 250,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 5",
+  "wrong": "ANSWER: 100"
+ },
+ {
+  "id": "think-04",
+  "level": 1,
+  "category": "cognitive-reflection",
+  "prompt": "A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost, in dollars?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 0.05
   },
-  {
-    "id": "think-05",
-    "category": "planning",
-    "prompt": "You need to make tea, but the kettle is empty and the mug is dirty. List a sensible sequence of actions.",
-    "min_words": 20
-  }
+  "max_tokens": 700,
+  "est_out_tokens": 250,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 0.05",
+  "wrong": "ANSWER: 0.10"
+ },
+ {
+  "id": "think-05",
+  "level": 2,
+  "category": "syllogism",
+  "prompt": "All glips are zarns. Some zarns are mips. Does it necessarily follow that some glips are mips? Answer yes or no.\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "no"
+   ]
+  },
+  "max_tokens": 1000,
+  "est_out_tokens": 400,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: No",
+  "wrong": "ANSWER: Yes"
+ },
+ {
+  "id": "think-06",
+  "level": 2,
+  "category": "exponential-growth",
+  "prompt": "A patch of lily pads doubles in size every day. It takes 48 days to cover the entire lake. On which day was the lake half covered?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 47
+  },
+  "max_tokens": 1000,
+  "est_out_tokens": 400,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 47",
+  "wrong": "ANSWER: 24"
+ },
+ {
+  "id": "think-07",
+  "level": 2,
+  "category": "average-speed",
+  "prompt": "A car drives 60 km at 30 km/h, then another 60 km at 60 km/h. What is its average speed over the whole trip, in km/h?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 40
+  },
+  "max_tokens": 1000,
+  "est_out_tokens": 400,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 40",
+  "wrong": "ANSWER: 45"
+ },
+ {
+  "id": "think-08",
+  "level": 2,
+  "category": "algebra-word",
+  "prompt": "Tom is twice as old as Sam. In 6 years, Tom will be 1.5 times as old as Sam will be then. How old is Tom now?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 12
+  },
+  "max_tokens": 1000,
+  "est_out_tokens": 400,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 12",
+  "wrong": "ANSWER: 18"
+ },
+ {
+  "id": "think-09",
+  "level": 2,
+  "category": "constraint-satisfaction",
+  "prompt": "Five tasks A, B, C, D, E must be done one at a time in slots 1 to 5. Rules: A is done before C. B is not in slot 1. D is done immediately after E. C is not in slot 5. E is done before B. Give any valid order as letters separated by commas.\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "order",
+   "items": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ],
+   "constraints": [
+    [
+     "before",
+     "A",
+     "C"
+    ],
+    [
+     "not_slot",
+     "B",
+     1
+    ],
+    [
+     "immediately_after",
+     "D",
+     "E"
+    ],
+    [
+     "not_last",
+     "C"
+    ],
+    [
+     "before",
+     "E",
+     "B"
+    ]
+   ]
+  },
+  "max_tokens": 1000,
+  "est_out_tokens": 400,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: A,C,E,D,B",
+  "wrong": "ANSWER: A,B,C,D,E"
+ },
+ {
+  "id": "think-10",
+  "level": 3,
+  "category": "probability",
+  "prompt": "A box has 3 red and 2 blue balls. Two balls are drawn without replacement. What is the probability that both are red? Give an exact fraction.\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": "3/10"
+  },
+  "max_tokens": 1400,
+  "est_out_tokens": 700,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 3/10",
+  "wrong": "ANSWER: 9/25"
+ },
+ {
+  "id": "think-11",
+  "level": 3,
+  "category": "combinatorics",
+  "prompt": "How many distinct arrangements are there of the letters in the word LEVEL?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 30
+  },
+  "max_tokens": 1400,
+  "est_out_tokens": 700,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 30",
+  "wrong": "ANSWER: 120"
+ },
+ {
+  "id": "think-12",
+  "level": 3,
+  "category": "combinatorics",
+  "prompt": "A committee of 3 people is chosen from 6 men and 4 women. How many possible committees contain at least one woman?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 100
+  },
+  "max_tokens": 1400,
+  "est_out_tokens": 700,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 100",
+  "wrong": "ANSWER: 120"
+ },
+ {
+  "id": "think-13",
+  "level": 3,
+  "category": "knights-and-knaves",
+  "prompt": "On an island, knights always tell the truth and knaves always lie. A says: 'B is a knave.' B says: 'A and I are the same type.' What are A and B? Answer in the form 'A=<knight|knave>, B=<knight|knave>'.\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "A=knight, B=knave",
+    "A knight, B knave"
+   ],
+   "squash": true
+  },
+  "max_tokens": 1400,
+  "est_out_tokens": 700,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: A=knight, B=knave",
+  "wrong": "ANSWER: A=knave, B=knight"
+ },
+ {
+  "id": "think-14",
+  "level": 3,
+  "category": "contradiction",
+  "prompt": "Statements: (1) Every employee in the Berlin office speaks German. (2) Mia works in the Berlin office. (3) Mia does not speak German. Can all three statements be true at the same time? Answer yes or no.\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "no"
+   ]
+  },
+  "max_tokens": 1400,
+  "est_out_tokens": 700,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: No",
+  "wrong": "ANSWER: Yes"
+ },
+ {
+  "id": "think-15",
+  "level": 3,
+  "category": "spatial",
+  "prompt": "You are facing north. You turn right 90 degrees, then turn left 180 degrees, then turn right 90 degrees. Which compass direction are you facing now?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "north"
+   ]
+  },
+  "max_tokens": 1400,
+  "est_out_tokens": 700,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: North",
+  "wrong": "ANSWER: South"
+ },
+ {
+  "id": "think-16",
+  "level": 3,
+  "category": "relational",
+  "prompt": "Anna is taller than Ben. Ben is taller than Chloe. Dan is shorter than Chloe but taller than Eli. Who is the second shortest of the five?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "Dan"
+   ]
+  },
+  "max_tokens": 1400,
+  "est_out_tokens": 700,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: Dan",
+  "wrong": "ANSWER: Chloe"
+ },
+ {
+  "id": "think-17",
+  "level": 3,
+  "category": "sequence",
+  "prompt": "What is the next number in the sequence 2, 6, 12, 20, 30, ...?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 42
+  },
+  "max_tokens": 1400,
+  "est_out_tokens": 700,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 42",
+  "wrong": "ANSWER: 40"
+ },
+ {
+  "id": "think-18",
+  "level": 3,
+  "category": "modular-arithmetic",
+  "prompt": "What is the remainder when 2^100 is divided by 7?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 2
+  },
+  "max_tokens": 1400,
+  "est_out_tokens": 700,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 2",
+  "wrong": "ANSWER: 1"
+ },
+ {
+  "id": "think-19",
+  "level": 4,
+  "category": "probability-puzzle",
+  "prompt": "A game show has 100 doors: one hides a car, 99 hide goats. You pick one door. The host, who knows where the car is, opens 98 of the other doors, all showing goats. If you switch to the remaining unopened door, what is the probability you win the car? Give a decimal or fraction.\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 0.99,
+   "tol": 0.0006
+  },
+  "max_tokens": 1800,
+  "est_out_tokens": 1200,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 99/100",
+  "wrong": "ANSWER: 1/2"
+ },
+ {
+  "id": "think-20",
+  "level": 4,
+  "category": "optimization",
+  "prompt": "Four people must cross a bridge at night with one torch; at most two cross at a time and they move at the slower person's pace. They take 1, 2, 5 and 10 minutes respectively. What is the minimum total time for all four to cross, in minutes?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 17
+  },
+  "max_tokens": 1800,
+  "est_out_tokens": 1200,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 17",
+  "wrong": "ANSWER: 19"
+ },
+ {
+  "id": "think-21",
+  "level": 4,
+  "category": "conditional-probability",
+  "prompt": "A family has two children. You learn that at least one of them is a boy born on a Tuesday. Assuming boys and girls and all days of the week are equally likely and independent, what is the probability that both children are boys? Give an exact fraction.\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": "13/27",
+   "tol": 0.0006
+  },
+  "max_tokens": 1800,
+  "est_out_tokens": 1200,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 13/27",
+  "wrong": "ANSWER: 1/3"
+ },
+ {
+  "id": "think-22",
+  "level": 4,
+  "category": "planning-search",
+  "prompt": "You have a 3-litre jug and a 5-litre jug and unlimited water. What is the minimum number of steps (fill, empty, or pour one jug into the other) needed to measure exactly 4 litres in one of the jugs?\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "numeric",
+   "answer": 6
+  },
+  "max_tokens": 1800,
+  "est_out_tokens": 1200,
+  "tags": [
+   "reasoning"
+  ],
+  "reference": "(work shown)\nANSWER: 6",
+  "wrong": "ANSWER: 8"
+ }
 ]

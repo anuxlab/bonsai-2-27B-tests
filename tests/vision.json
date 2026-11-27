@@ -1,25 +1,296 @@
 [
-  {
-    "id": "vision-01",
-    "category": "image-understanding",
-    "prompt": {
-      "text": "Describe the main objects and scene in this image. Mention visible colors.",
-      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Fronalpstock_big.jpg/640px-Fronalpstock_big.jpg"
-    },
-    "min_words": 15,
-    "expected_contains": [
-      "mountain"
-    ]
+ {
+  "id": "vision-01",
+  "level": 1,
+  "category": "counting",
+  "image": {
+   "gen": "count_shapes",
+   "red_circles": 5,
+   "blue_squares": 3,
+   "seed": 3
   },
-  {
-    "id": "vision-02",
-    "category": "visual-grounding",
-    "prompt": {
-      "text": "Is the image primarily an outdoor or indoor scene? Answer and give one visual clue.",
-      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Fronalpstock_big.jpg/640px-Fronalpstock_big.jpg"
-    },
-    "expected_contains": [
-      "outdoor"
+  "prompt": "How many red circles are in the image? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 5
+  },
+  "reference": "5",
+  "wrong": "3",
+  "max_tokens": 200,
+  "est_out_tokens": 60,
+  "est_prompt_tokens": 260,
+  "thinking": false,
+  "tags": [
+   "vision"
+  ]
+ },
+ {
+  "id": "vision-02",
+  "level": 1,
+  "category": "color-identification",
+  "image": {
+   "gen": "single_shape",
+   "shape": "triangle",
+   "color": "green",
+   "bg": "yellow"
+  },
+  "prompt": "What color is the triangle? Reply with one word.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "green"
+   ]
+  },
+  "reference": "Green",
+  "wrong": "Red",
+  "max_tokens": 200,
+  "est_out_tokens": 60,
+  "est_prompt_tokens": 260,
+  "thinking": false,
+  "tags": [
+   "vision"
+  ]
+ },
+ {
+  "id": "vision-03",
+  "level": 2,
+  "category": "ocr",
+  "image": {
+   "gen": "text",
+   "text": "BONSAI-2027"
+  },
+  "prompt": "What text is written in the image? Reply with only the text.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "BONSAI-2027"
+   ],
+   "squash": true
+  },
+  "reference": "BONSAI-2027",
+  "wrong": "BONSAI-2024",
+  "max_tokens": 200,
+  "est_out_tokens": 60,
+  "est_prompt_tokens": 260,
+  "thinking": false,
+  "tags": [
+   "vision"
+  ]
+ },
+ {
+  "id": "vision-04",
+  "level": 2,
+  "category": "chart-interpretation",
+  "image": {
+   "gen": "bar_chart",
+   "values": [
+    3,
+    7,
+    9,
+    5
+   ],
+   "labels": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ]
+  },
+  "prompt": "Which bar is the tallest? Reply with only its letter.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "C"
+   ]
+  },
+  "reference": "C",
+  "wrong": "B",
+  "max_tokens": 200,
+  "est_out_tokens": 60,
+  "est_prompt_tokens": 260,
+  "thinking": false,
+  "tags": [
+   "vision"
+  ]
+ },
+ {
+  "id": "vision-05",
+  "level": 2,
+  "category": "chart-reading",
+  "image": {
+   "gen": "bar_chart",
+   "values": [
+    3,
+    7,
+    9,
+    5
+   ],
+   "labels": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "show_values": true
+  },
+  "prompt": "What is the value shown above bar B? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 7
+  },
+  "reference": "7",
+  "wrong": "9",
+  "max_tokens": 200,
+  "est_out_tokens": 60,
+  "est_prompt_tokens": 260,
+  "thinking": false,
+  "tags": [
+   "vision"
+  ]
+ },
+ {
+  "id": "vision-06",
+  "level": 2,
+  "category": "spatial-relations",
+  "image": {
+   "gen": "spatial"
+  },
+  "prompt": "Is the red circle to the left or to the right of the blue square? Reply with one word.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "left"
+   ]
+  },
+  "reference": "Left",
+  "wrong": "Right",
+  "max_tokens": 200,
+  "est_out_tokens": 60,
+  "est_prompt_tokens": 260,
+  "thinking": false,
+  "tags": [
+   "vision"
+  ]
+ },
+ {
+  "id": "vision-07",
+  "level": 3,
+  "category": "table-interpretation",
+  "image": {
+   "gen": "table",
+   "rows": [
+    [
+     "Item",
+     "Qty"
+    ],
+    [
+     "Alpha",
+     "7"
+    ],
+    [
+     "Beta",
+     "12"
+    ],
+    [
+     "Gamma",
+     "5"
     ]
-  }
+   ]
+  },
+  "prompt": "In the table, what is the Qty for the row 'Beta'? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 12
+  },
+  "reference": "12",
+  "wrong": "7",
+  "max_tokens": 200,
+  "est_out_tokens": 60,
+  "est_prompt_tokens": 260,
+  "thinking": false,
+  "tags": [
+   "vision"
+  ]
+ },
+ {
+  "id": "vision-08",
+  "level": 3,
+  "category": "visual-reasoning",
+  "image": {
+   "gen": "equation",
+   "text": "12 + 30 ="
+  },
+  "prompt": "Solve the equation shown in the image. Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 42
+  },
+  "reference": "42",
+  "wrong": "32",
+  "max_tokens": 200,
+  "est_out_tokens": 60,
+  "est_prompt_tokens": 260,
+  "thinking": false,
+  "tags": [
+   "vision"
+  ]
+ },
+ {
+  "id": "vision-09",
+  "level": 3,
+  "category": "ambiguous-input",
+  "image": {
+   "gen": "blank"
+  },
+  "prompt": "What animal is shown in this image? If there is no animal, say so clearly.",
+  "grade": {
+   "type": "uncertainty"
+  },
+  "reference": "There is no animal in this image; it is a plain gray picture.",
+  "wrong": "It shows a cat sitting on a sofa.",
+  "max_tokens": 300,
+  "est_out_tokens": 150,
+  "est_prompt_tokens": 260,
+  "thinking": false,
+  "tags": [
+   "vision"
+  ]
+ },
+ {
+  "id": "vision-10",
+  "level": 2,
+  "category": "description",
+  "image": {
+   "gen": "scene"
+  },
+  "prompt": "Describe this image in one sentence.",
+  "grade": [
+   {
+    "type": "contains_any",
+    "terms": [
+     "sun",
+     "yellow"
+    ]
+   },
+   {
+    "type": "contains_any",
+    "terms": [
+     "green",
+     "grass",
+     "field",
+     "ground",
+     "hill"
+    ]
+   }
+  ],
+  "reference": "A house with a red roof stands on green grass under a blue sky with a yellow sun.",
+  "wrong": "A dark cave.",
+  "max_tokens": 300,
+  "est_out_tokens": 150,
+  "est_prompt_tokens": 260,
+  "thinking": false,
+  "tags": [
+   "vision"
+  ]
+ }
 ]

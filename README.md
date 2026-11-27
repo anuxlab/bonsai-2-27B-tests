@@ -1,85 +1,71 @@
-# Bonsai 2 27B CI Capability Evaluation
+# Bonsai-2-27B evaluation pipeline (v2)
 
-This repository runs a collection of **lightweight, reproducible capability checks** against Bonsai 2 27B using a local `llama-server` OpenAI-compatible endpoint on GitHub-hosted runners.
+A resource-aware, sharded benchmark for **Ternary-Bonsai-2-27B** running locally under `llama-server` on free GitHub-hosted runners.
+Stdlib-only Python (Pillow only for the vision shard, matplotlib optional for charts). No paid APIs, no model files in Git.
 
-> This is a screening/evaluation harness, not a validated benchmark. Most grading is heuristic (string/regex/structure checks); a pass is not a guarantee of correctness. For serious comparisons, use fixed prompts, multiple runs, blinded model comparison, executable hidden tests, and pre-registration.
+## Run it
 
-## Pipelines
+**Actions → "Bonsai-2-27B evaluation (matrix)" → Run workflow.** Defaults run everything (~160 tests) in 14 parallel jobs.
 
-| Suite | Difficulty / focus | Examples |
+| input | meaning |
+|---|---|
+| `suites` | `all` or e.g. `coding,agentic` |
+| `repeat`, `seed`, `temperature`, `top_p`, `thinking`, `max_tokens`, `context_size` | sampling / runtime controls (all recorded in every shard's `run_config.json`) |
+| `parallel_jobs`, `shard_minutes` | matrix `max-parallel` and the target length of a shard |
+| `stress_level` | `low` / `medium` / `high` (the kill-and-restart test needs ≥ medium) |
+| `enable_vision`, `enable_long_context`, `long_context_levels` | toggle expensive suites; levels from `1k,2k,4k,8k` |
+| `resource_policy` | `strict` aborts a shard that lacks RAM; `permissive` only warns |
+| `budget_minutes` | per-shard hard budget; remaining tests become **skipped**, not failed |
+| `test_filter` | regex on test ids, to re-run only some tests (e.g. `^think-1`) |
+| `publish` | commit compact results to the `benchmark-results` branch |
+
+Local, no model needed (verifies the harness itself): `python3 -m bench selftest --e2e`
+
+## What is tested (167 test definitions)
+
+| suite | tests | what it probes |
 |---|---|---|
-| `basic` | beginner smoke tests | arithmetic, short factual answer, concise instruction adherence, JSON |
-| `thinking` | reasoning | multi-step arithmetic, logic, constraints, planning, deduction |
-| `coding` | code generation & debugging | Python functions, edge cases, binary search, explanation |
-| `agentic` | tool use and planning | tool choice, call planning, JSON-shaped tool call, safe action planning |
-| `advanced` | robustness / structured outputs | synthesis, JSON, prompt-injection resistance, uncertainty, probability |
-| `vision` | multimodal image understanding | image description and grounded scene classification (requires image URL access) |
-| `all` | run all suites | longer job; may exceed hosted runner time budget |
+| basic | 18 | arithmetic, facts, strict formatting, JSON, tokenization trap (`strawberry`) |
+| thinking | 22 | CRT puzzles, algebra, probability, combinatorics, knights/knaves, constraint puzzles (verified, not string-matched), Tuesday-boy, jugs, bridge crossing |
+| coding | 18 | **executed** in a sandbox against hidden tests: debugging, edge cases, O(n) vs O(n²), LRU cache, CSV parser, DP, expression parser, and **unit-test generation graded by mutation** |
+| agentic | 9 | native tool calls against real mock tools: selection, restraint, multi-step, state, file I/O, flaky-API retry, **prompt injection in a tool result**, asking for missing info, Python tool |
+| advanced | 10 | JSON extraction, multi-constraint writing, calibration on unanswerable questions, table reasoning, cipher, code tracing, system-prompt adherence |
+| consistency | 30 | 6 families × (original / paraphrase / reordered / irrelevant wording / repeat at T=0.7) → answer-agreement and accuracy |
+| long_context | 15 (+5) | needles at start/middle/end + corrections + near-duplicate distractors at ~1k/2k/4k (8k opt-in) |
+| vision | 10 | images **generated locally** with known ground truth: counting, colour, OCR, charts, table, spatial, equation, blank-image honesty |
+| performance | 10 | cold start, warm latency, TTFT, output/prompt length scaling, prompt-cache reuse, concurrency ×2 |
+| stress | 8 | burst, long generation, mixed sizes, concurrent burst, client abort, malformed requests, context overflow, `kill -9` recovery |
+| safety | 12 | refusals, **over-refusal**, injection, secret keeping, instruction hierarchy, hallucination, adversarial formatting |
 
-## Run it in GitHub Actions
+Every test has a difficulty `level` (1–4) and a `category`, and reports slice by both.
 
-1. Open **Actions → Bonsai 2 27B Capability Evaluation**.
-2. Choose **Run workflow**.
-3. Select a suite (start with `basic`, then `thinking` / `coding`, and later `agentic`, `advanced`, `vision`, or `all`).
-4. Set repetitions and token limit. Repetition is useful for variability but increases run time.
-5. Download the artifact for raw JSONL results, summary JSON, server logs, and model SHA-256 hashes.
+## Design decisions (grounded in the 2026-11-25 run)
 
-The workflow is manual-dispatch by design to avoid downloading a multi-GB model on every commit. Runner CPU inference can be slow; set a sensible token limit and allow a long timeout.
+* **Throughput was ~1.6 tok/s decode and ~4 tok/s prefill** on the 4-vCPU runner, so 27 tests took ~1 h. Everything is sized around that:
+  per-test `max_tokens`, planning estimates (`bench/cases.py`), a per-shard time budget, and long-context questions that share one document so the prompt cache pays the prefill once.
+* **Parallelism is across VMs, not inside one.** Each matrix job is its own runner, so jobs cannot starve each other of RAM. Inside a job the server runs `-np 1` (only `performance`/`stress` use `-np 2`, because they test concurrency) — extra slots on 4 cores would only split the same throughput.
+* **`adv-05` was a grader false negative** (the model answered `\frac{3}{10}`). Graders now parse fractions/LaTeX/percent/thousands separators, and `python3 -m bench selftest` proves for every test that its reference answer passes and a plausible wrong answer fails. Run it after editing any test.
+* **Vision failed because llama-server could not fetch a Wikimedia URL** (HTTP 500 in 0.1 s). Images are now generated locally and sent as base64; if the server reports no vision modality the suite is **skipped with a reason**, never scored as a model failure.
+* Accuracy = passed / (passed + failed + truncated + timeout). Errors, grader errors and skips are listed separately. `truncated` (hit `max_tokens`) is its own status, because for a reasoning model "ran out of budget" differs from "wrong".
 
-## Run locally against an OpenAI-compatible endpoint
+## Where everything is
 
-```bash
-python3 scripts/evaluate.py --base-url http://127.0.0.1:8080/v1 --suites basic
-python3 scripts/evaluate.py --suites thinking,coding --repeat 2 --max-tokens 4096 --thinking on
-python3 scripts/evaluate.py --suites all --max-tokens 2048
-```
+Each shard artifact `shard-<name>/` contains: `transcript.md` (human-readable prompt → reasoning → response → checks for every test), `tests/<id>__r<n>.json` (prompt, raw request/response, reasoning, tool-call trace, every grading check, tokens, server timings, retry history, resources before/after), `results.jsonl`, `summary.{json,md}`, `metadata/` (run config, model + hashes, runtime version/command), `diagnostics/` (`preflight.txt`, `memory.jsonl` every 5 s, `server.log`, `events.log`, OOM evidence).
+The final artifact `benchmark-run-<id>/` adds `reports/overall.{json,csv,md}`, per-suite summaries, charts and a `manifest.json` with SHA-256 of every file. The same Markdown lands in the Actions job summary.
 
-Environment variable: `OPENAI_BASE_URL` (defaults to `http://127.0.0.1:8080/v1`).
+Actions console: each test prints a one-line `PASS/FAIL/TRNC/TIME/ERR/SKIP` status and an expandable group with prompt, reasoning, response and grading checks.
 
-## Artifacts / measurements
+## Failure handling
 
-Each run writes:
-- `results/run_<UTC timestamp>.jsonl`: one record per test, prompt response, reasoning field if provided by server, request latency, API usage, finish reason, check details and errors.
-- `results/summary_<UTC timestamp>.json`: aggregate request counts, heuristic pass rate, mean latency and selected suites.
-- Workflow artifact: raw result files, server logs, model hash file, runtime archive.
+Test failure → recorded, run continues. HTTP/connect errors → retried with backoff; a dead server is restarted (max 2) with the exit code captured (`-9` ⇒ probable OOM kill). Hash mismatch → file rejected, job fails. Insufficient disk → abort *before* download. Server won't start → exit code 3, every test recorded as `error/infrastructure`, logs preserved. Heavy tests are skipped if `MemAvailable` falls below a floor. A shard that never reports is flagged **missing** in the report.
 
-The tests record latency and reported token usage, but token throughput is only reported if the API returns usage counters. Hosted runner measurements are hardware-specific and should not be compared directly to local GPU results.
+## Adding tests
 
-## Model/runtime configuration
+Edit `tests/<suite>.json`: `id`, `level`, `category`, `prompt`, `grade`, `max_tokens`, `est_out_tokens`, plus `reference` and `wrong` so selftest can validate the grader. Grader types: `numeric exact choice number_list lines contains_all contains_any not_contains regex json constraints order refusal uncertainty code unit_tests trace` (see `bench/graders.py`). Bump `DATASET_VERSION` in `bench/__init__.py` when you change tests, so runs stay comparable.
 
-The default downloads the `PQ2_0` GGUF and matching mmproj from PrismML's Hugging Face repository and uses PrismML's llama.cpp runtime. `--jinja` is enabled for chat-template/tool-format support. The workflow runs CPU-only (`-ngl 0`) on Ubuntu hosted runners and uses an 8 GB swap best-effort.
+## Known limits (be aware)
 
-## Important caveats
-
-- GitHub-hosted runners are not intended for sustained inference of large models. This may be slow, memory constrained, or fail. It is a CI smoke/evaluation environment, not a hardware performance benchmark.
-- Test prompts and heuristic graders are visible in this repo; contamination is possible.
-- `vision` requires the runner to reach the image URL and the model server to support image input with the projector. If it fails, inspect server logs. Do not interpret network failures as a model capability failure.
-- Agentic suite evaluates planning and tool-call descriptions only. It does **not** execute tools in a live sandbox.
-- The current coding checks are pattern-based. An advanced follow-up can add isolated Python execution, generated tests, SWE-bench-style repo tasks, and tool-round-trip environments.
-- For meaningful results, keep model/runtime hashes, settings, prompt versions, and runner environment together; rerun each task several times if measuring stability.
-
-## Folder layout
-
-```text
-.github/workflows/
-  call_27b.yml       # manual entry workflow + reusable-call interface
-  exec.yml           # reusable wrapper
-scripts/
-  evaluate.py        # endpoint client, graders, result/summary writer
-tests/
-  basic.json
-  thinking.json
-  coding.json
-  agentic.json
-  advanced.json
-  vision.json
-results/              # generated output, not committed
-```
-
-## Next recommended upgrades
-
-1. Add executable code tests in a sandbox (Docker unavailable on hosted runner? use a subprocess with timeouts and restricted environment).
-2. Add tool-call round-trip tests with a mock tool registry and state assertions.
-3. Add long-context tests (gradually increase input length and check retrieval/needle accuracy).
-4. Add metamorphic tests (equivalent prompts, arithmetic invariants, translation consistency).
-5. Add paired-model evaluation and confidence intervals; freeze task sets before model comparison.
+* `refusal` / `uncertainty` graders are **keyword heuristics** (flagged `heuristic` in results); spot-check safety in `transcript.md`.
+* Sandbox: separate process, scrubbed env, rlimits, timeouts, no network (`unshare -rn` when the kernel allows it, in-process guards otherwise; the mode used is recorded). It is best-effort, not a security boundary; eval jobs also hold a read-only token and no secrets.
+* Hosted-runner speed varies; treat small latency/throughput differences as noise.
+* The planner's time estimates use the 1.6 / 4 tok/s measured once; actual prefill at 2k–4k tokens is unmeasured until the `performance` shard reports it.

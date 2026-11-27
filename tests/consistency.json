@@ -1,0 +1,642 @@
+[
+ {
+  "id": "cons-square-original",
+  "level": 2,
+  "category": "consistency",
+  "family": "square",
+  "variant": "original",
+  "prompt": "What is 12 squared? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 144
+  },
+  "reference": "144",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-square-paraphrase",
+  "level": 2,
+  "category": "consistency",
+  "family": "square",
+  "variant": "paraphrase",
+  "prompt": "Compute the square of twelve. Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 144
+  },
+  "reference": "144",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-square-reordered",
+  "level": 2,
+  "category": "consistency",
+  "family": "square",
+  "variant": "reordered",
+  "prompt": "Twelve multiplied by itself equals what number? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 144
+  },
+  "reference": "144",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-square-irrelevant",
+  "level": 2,
+  "category": "consistency",
+  "family": "square",
+  "variant": "irrelevant",
+  "prompt": "The weather's lovely today, isn't it. Anyway: what is twelve times twelve? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 144
+  },
+  "reference": "144",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-square-repeat-t0.7",
+  "level": 2,
+  "category": "consistency",
+  "family": "square",
+  "variant": "repeat-t0.7",
+  "prompt": "What is 12 squared? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 144
+  },
+  "reference": "144",
+  "temperature": 0.7,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-mean-original",
+  "level": 2,
+  "category": "consistency",
+  "family": "mean",
+  "variant": "original",
+  "prompt": "What is the mean of 4, 8, 15, 16, 23 and 42? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 18
+  },
+  "reference": "18",
+  "temperature": 0.0,
+  "max_tokens": 400,
+  "est_out_tokens": 100,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-mean-paraphrase",
+  "level": 2,
+  "category": "consistency",
+  "family": "mean",
+  "variant": "paraphrase",
+  "prompt": "Find the arithmetic average of these values: 4, 8, 15, 16, 23, 42. Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 18
+  },
+  "reference": "18",
+  "temperature": 0.0,
+  "max_tokens": 400,
+  "est_out_tokens": 100,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-mean-reordered",
+  "level": 2,
+  "category": "consistency",
+  "family": "mean",
+  "variant": "reordered",
+  "prompt": "What is the mean of 42, 23, 16, 15, 8 and 4? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 18
+  },
+  "reference": "18",
+  "temperature": 0.0,
+  "max_tokens": 400,
+  "est_out_tokens": 100,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-mean-irrelevant",
+  "level": 2,
+  "category": "consistency",
+  "family": "mean",
+  "variant": "irrelevant",
+  "prompt": "My cat is asleep on the sofa. Separately, the numbers 4, 8, 15, 16, 23 and 42 have what average? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 18
+  },
+  "reference": "18",
+  "temperature": 0.0,
+  "max_tokens": 400,
+  "est_out_tokens": 100,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-mean-repeat-t0.7",
+  "level": 2,
+  "category": "consistency",
+  "family": "mean",
+  "variant": "repeat-t0.7",
+  "prompt": "What is the mean of 4, 8, 15, 16, 23 and 42? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 18
+  },
+  "reference": "18",
+  "temperature": 0.7,
+  "max_tokens": 400,
+  "est_out_tokens": 100,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-json-original",
+  "level": 2,
+  "category": "consistency",
+  "family": "json",
+  "variant": "original",
+  "prompt": "Return only a JSON object with keys name and age for: Maria, 29 years old.",
+  "grade": {
+   "type": "json",
+   "schema": {
+    "type": "object",
+    "required": [
+     "name",
+     "age"
+    ]
+   },
+   "equals": {
+    "name": "Maria",
+    "age": 29
+   }
+  },
+  "reference": "{\"name\": \"Maria\", \"age\": 29}",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-json-paraphrase",
+  "level": 2,
+  "category": "consistency",
+  "family": "json",
+  "variant": "paraphrase",
+  "prompt": "Output just a JSON object describing a 29-year-old called Maria, using the keys 'name' and 'age'.",
+  "grade": {
+   "type": "json",
+   "schema": {
+    "type": "object",
+    "required": [
+     "name",
+     "age"
+    ]
+   },
+   "equals": {
+    "name": "Maria",
+    "age": 29
+   }
+  },
+  "reference": "{\"name\": \"Maria\", \"age\": 29}",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-json-reordered",
+  "level": 2,
+  "category": "consistency",
+  "family": "json",
+  "variant": "reordered",
+  "prompt": "Return only a JSON object with the keys age and name. The person is 29 years old and called Maria.",
+  "grade": {
+   "type": "json",
+   "schema": {
+    "type": "object",
+    "required": [
+     "name",
+     "age"
+    ]
+   },
+   "equals": {
+    "name": "Maria",
+    "age": 29
+   }
+  },
+  "reference": "{\"name\": \"Maria\", \"age\": 29}",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-json-irrelevant",
+  "level": 2,
+  "category": "consistency",
+  "family": "json",
+  "variant": "irrelevant",
+  "prompt": "Thanks for your help earlier! Now, return only a JSON object with keys name and age for: Maria, 29 years old.",
+  "grade": {
+   "type": "json",
+   "schema": {
+    "type": "object",
+    "required": [
+     "name",
+     "age"
+    ]
+   },
+   "equals": {
+    "name": "Maria",
+    "age": 29
+   }
+  },
+  "reference": "{\"name\": \"Maria\", \"age\": 29}",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-json-repeat-t0.7",
+  "level": 2,
+  "category": "consistency",
+  "family": "json",
+  "variant": "repeat-t0.7",
+  "prompt": "Return only a JSON object with keys name and age for: Maria, 29 years old.",
+  "grade": {
+   "type": "json",
+   "schema": {
+    "type": "object",
+    "required": [
+     "name",
+     "age"
+    ]
+   },
+   "equals": {
+    "name": "Maria",
+    "age": 29
+   }
+  },
+  "reference": "{\"name\": \"Maria\", \"age\": 29}",
+  "temperature": 0.7,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-boiling-original",
+  "level": 2,
+  "category": "consistency",
+  "family": "boiling",
+  "variant": "original",
+  "prompt": "At what temperature in degrees Fahrenheit does water boil at sea level? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 212
+  },
+  "reference": "212",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-boiling-paraphrase",
+  "level": 2,
+  "category": "consistency",
+  "family": "boiling",
+  "variant": "paraphrase",
+  "prompt": "Water boils at sea level at how many °F? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 212
+  },
+  "reference": "212",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-boiling-reordered",
+  "level": 2,
+  "category": "consistency",
+  "family": "boiling",
+  "variant": "reordered",
+  "prompt": "At sea level, in Fahrenheit, what is water's boiling point? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 212
+  },
+  "reference": "212",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-boiling-irrelevant",
+  "level": 2,
+  "category": "consistency",
+  "family": "boiling",
+  "variant": "irrelevant",
+  "prompt": "I'm making tea and the kettle is old. What is the boiling point of water at sea level in Fahrenheit? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 212
+  },
+  "reference": "212",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-boiling-repeat-t0.7",
+  "level": 2,
+  "category": "consistency",
+  "family": "boiling",
+  "variant": "repeat-t0.7",
+  "prompt": "At what temperature in degrees Fahrenheit does water boil at sea level? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 212
+  },
+  "reference": "212",
+  "temperature": 0.7,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-tallest-original",
+  "level": 2,
+  "category": "consistency",
+  "family": "tallest",
+  "variant": "original",
+  "prompt": "Tom is taller than Jim. Jim is taller than Ray. Who is the tallest? Reply with only the name.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "Tom"
+   ]
+  },
+  "reference": "Tom",
+  "temperature": 0.0,
+  "max_tokens": 400,
+  "est_out_tokens": 80,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-tallest-paraphrase",
+  "level": 2,
+  "category": "consistency",
+  "family": "tallest",
+  "variant": "paraphrase",
+  "prompt": "Ray is shorter than Jim, and Jim is shorter than Tom. Which of the three is tallest? Reply with only the name.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "Tom"
+   ]
+  },
+  "reference": "Tom",
+  "temperature": 0.0,
+  "max_tokens": 400,
+  "est_out_tokens": 80,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-tallest-reordered",
+  "level": 2,
+  "category": "consistency",
+  "family": "tallest",
+  "variant": "reordered",
+  "prompt": "Jim is taller than Ray. Tom is taller than Jim. Who is the tallest? Reply with only the name.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "Tom"
+   ]
+  },
+  "reference": "Tom",
+  "temperature": 0.0,
+  "max_tokens": 400,
+  "est_out_tokens": 80,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-tallest-irrelevant",
+  "level": 2,
+  "category": "consistency",
+  "family": "tallest",
+  "variant": "irrelevant",
+  "prompt": "Tom, Jim and Ray went hiking last Saturday. Tom is taller than Jim and Jim is taller than Ray. Who is the tallest? Reply with only the name.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "Tom"
+   ]
+  },
+  "reference": "Tom",
+  "temperature": 0.0,
+  "max_tokens": 400,
+  "est_out_tokens": 80,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-tallest-repeat-t0.7",
+  "level": 2,
+  "category": "consistency",
+  "family": "tallest",
+  "variant": "repeat-t0.7",
+  "prompt": "Tom is taller than Jim. Jim is taller than Ray. Who is the tallest? Reply with only the name.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "Tom"
+   ]
+  },
+  "reference": "Tom",
+  "temperature": 0.7,
+  "max_tokens": 400,
+  "est_out_tokens": 80,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-equiv-mul",
+  "level": 2,
+  "category": "consistency",
+  "family": "equiv",
+  "variant": "mul",
+  "prompt": "Is 17 × 6 equal to 102? Reply with only yes or no.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "yes"
+   ]
+  },
+  "reference": "yes",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-equiv-div",
+  "level": 2,
+  "category": "consistency",
+  "family": "equiv",
+  "variant": "div",
+  "prompt": "Does 102 divided by 6 equal 17? Reply with only yes or no.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "yes"
+   ]
+  },
+  "reference": "yes",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-equiv-divisible",
+  "level": 2,
+  "category": "consistency",
+  "family": "equiv",
+  "variant": "divisible",
+  "prompt": "Is 102 divisible by 17? Reply with only yes or no.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "yes"
+   ]
+  },
+  "reference": "yes",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-equiv-wrong",
+  "level": 2,
+  "category": "consistency",
+  "family": "equiv",
+  "variant": "wrong",
+  "prompt": "Is 17 × 6 equal to 112? Reply with only yes or no.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "no"
+   ]
+  },
+  "reference": "no",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ },
+ {
+  "id": "cons-equiv-neg",
+  "level": 2,
+  "category": "consistency",
+  "family": "equiv",
+  "variant": "neg",
+  "prompt": "Is it false that 6 × 17 = 102? Reply with only yes or no.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "no"
+   ]
+  },
+  "reference": "no",
+  "temperature": 0.0,
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "consistency"
+  ]
+ }
+]

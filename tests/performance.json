@@ -1,0 +1,220 @@
+[
+ {
+  "id": "perf-01-cold-first-request",
+  "kind": "proc",
+  "proc": "perf_request",
+  "level": 2,
+  "category": "cold-start",
+  "params": {
+   "prompt": "Say hello in one short sentence.",
+   "max_tokens": 24,
+   "repeats": 1,
+   "stream": true
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "performance"
+  ],
+  "est_out_tokens": 24,
+  "est_prompt_tokens": 20,
+  "order": 0
+ },
+ {
+  "id": "perf-02-warm-short",
+  "kind": "proc",
+  "proc": "perf_request",
+  "level": 2,
+  "category": "warm-short",
+  "params": {
+   "prompt": "Say hello in one short sentence.",
+   "max_tokens": 24,
+   "repeats": 3,
+   "stream": true
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "performance"
+  ],
+  "est_out_tokens": 72,
+  "est_prompt_tokens": 60,
+  "order": 1
+ },
+ {
+  "id": "perf-03-out-64",
+  "kind": "proc",
+  "proc": "perf_request",
+  "level": 2,
+  "category": "output-length",
+  "params": {
+   "force_length": true,
+   "max_tokens": 64,
+   "repeats": 2,
+   "stream": true
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "performance"
+  ],
+  "est_out_tokens": 128,
+  "est_prompt_tokens": 40,
+  "order": 2
+ },
+ {
+  "id": "perf-04-out-128",
+  "kind": "proc",
+  "proc": "perf_request",
+  "level": 2,
+  "category": "output-length",
+  "params": {
+   "force_length": true,
+   "max_tokens": 128,
+   "repeats": 2,
+   "stream": true
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "performance"
+  ],
+  "est_out_tokens": 256,
+  "est_prompt_tokens": 40,
+  "order": 2
+ },
+ {
+  "id": "perf-05-out-256",
+  "kind": "proc",
+  "proc": "perf_request",
+  "level": 2,
+  "category": "output-length",
+  "params": {
+   "force_length": true,
+   "max_tokens": 256,
+   "repeats": 1,
+   "stream": true
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "performance"
+  ],
+  "est_out_tokens": 256,
+  "est_prompt_tokens": 20,
+  "order": 2
+ },
+ {
+  "id": "perf-06-prompt-128",
+  "kind": "proc",
+  "proc": "perf_request",
+  "level": 2,
+  "category": "prompt-length",
+  "params": {
+   "prompt_tokens": 128,
+   "max_tokens": 4,
+   "repeats": 2,
+   "stream": true
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "performance"
+  ],
+  "est_out_tokens": 8,
+  "est_prompt_tokens": 256,
+  "order": 3
+ },
+ {
+  "id": "perf-07-prompt-512",
+  "kind": "proc",
+  "proc": "perf_request",
+  "level": 2,
+  "category": "prompt-length",
+  "params": {
+   "prompt_tokens": 512,
+   "max_tokens": 4,
+   "repeats": 1,
+   "stream": true
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "performance"
+  ],
+  "est_out_tokens": 4,
+  "est_prompt_tokens": 512,
+  "order": 3
+ },
+ {
+  "id": "perf-08-prompt-1024",
+  "kind": "proc",
+  "proc": "perf_request",
+  "level": 2,
+  "category": "prompt-length",
+  "params": {
+   "prompt_tokens": 1024,
+   "max_tokens": 4,
+   "repeats": 1,
+   "stream": true,
+   "min_level": "medium"
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "performance"
+  ],
+  "est_out_tokens": 4,
+  "est_prompt_tokens": 1024,
+  "order": 3
+ },
+ {
+  "id": "perf-09-cache-reuse",
+  "kind": "proc",
+  "proc": "perf_cache",
+  "level": 2,
+  "category": "prompt-cache",
+  "params": {
+   "prompt_tokens": 256,
+   "max_tokens": 4
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "performance"
+  ],
+  "est_out_tokens": 4,
+  "est_prompt_tokens": 256,
+  "order": 4
+ },
+ {
+  "id": "perf-10-concurrency-2",
+  "kind": "proc",
+  "proc": "perf_concurrency",
+  "level": 2,
+  "category": "concurrency",
+  "params": {
+   "concurrency": 2,
+   "max_tokens": 48,
+   "needs_slots": 2
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "performance"
+  ],
+  "est_out_tokens": 48,
+  "est_prompt_tokens": 20,
+  "order": 9
+ }
+]

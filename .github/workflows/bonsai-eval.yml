@@ -1,0 +1,262 @@
+name: Bonsai-2-27B evaluation (matrix)
+
+# Manual trigger. Every input is captured in each shard's metadata/run_config.json.
+on:
+  workflow_dispatch:
+    inputs:
+      suites:
+        description: "Suites: 'all' or comma list of basic,thinking,coding,agentic,advanced,vision,consistency,long_context,performance,stress,safety"
+        default: "all"
+      repeat:
+        description: "Repetitions of every test (multiplies runtime)"
+        default: "1"
+      max_tokens:
+        description: "Global cap on generated tokens per request (0 = use each test's own limit). CPU decode is ~1.6 tok/s, so 2048 tokens = 21 min."
+        default: "2048"
+      context_size:
+        description: "llama-server context size (0 = auto per shard, min 8192)"
+        default: "0"
+      temperature:
+        description: "Sampling temperature override (empty = per-test, 0.0 for graded tests)"
+        default: ""
+      top_p:
+        description: "top_p override (empty = server default)"
+        default: ""
+      thinking:
+        description: "Reasoning mode"
+        type: choice
+        options: [auto, "on", "off"]
+        default: auto
+      parallel_jobs:
+        description: "max-parallel matrix jobs (each job is its own VM; GitHub free plan allows 20 concurrent)"
+        default: "14"
+      shard_minutes:
+        description: "Target minutes per shard when splitting big suites"
+        default: "60"
+      budget_minutes:
+        description: "Hard time budget inside a shard; remaining tests are marked skipped (not failed)"
+        default: "150"
+      stress_level:
+        description: "Stress workload intensity"
+        type: choice
+        options: [low, medium, high]
+        default: medium
+      enable_vision:
+        description: "Run the vision suite (downloads the multimodal projector)"
+        type: boolean
+        default: true
+      enable_long_context:
+        description: "Run the long-context suite (slow prefill on CPU)"
+        type: boolean
+        default: true
+      long_context_levels:
+        description: "Comma list from 1k,2k,4k,8k (8k is very slow on CPU)"
+        default: "1k,2k,4k"
+      resource_policy:
+        description: "strict aborts a shard on insufficient RAM; permissive only warns"
+        type: choice
+        options: [strict, permissive]
+        default: strict
+      test_filter:
+        description: "Regex on test ids to re-run only some tests, e.g. '^(think-1|code-0)'"
+        default: ""
+      seed:
+        description: "Sampling seed"
+        default: "1234"
+      publish:
+        description: "Commit compact results to the 'benchmark-results' branch"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read          # eval jobs get a read-only token and no secrets
+
+env:
+  RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+
+jobs:
+  plan:
+    name: plan + validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      expected_shards: ${{ steps.plan.outputs.expected_shards }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - name: Harness self-test (reference answers pass, wrong answers fail)
+        run: python3 -m bench selftest
+      - name: Plan shards
+        id: plan
+        env:
+          SUITES: ${{ inputs.suites }}
+          REPEAT: ${{ inputs.repeat }}
+          CTX: ${{ inputs.context_size }}
+          LCL: ${{ inputs.long_context_levels }}
+          VISION: ${{ inputs.enable_vision }}
+          LONGCTX: ${{ inputs.enable_long_context }}
+          FILTER: ${{ inputs.test_filter }}
+          SHARD_MIN: ${{ inputs.shard_minutes }}
+          STRESS: ${{ inputs.stress_level }}
+          MAXPAR: ${{ inputs.parallel_jobs }}
+        run: |
+          python3 -m bench plan --suites "$SUITES" --repeat "$REPEAT" --ctx "$CTX" --long-context-levels "$LCL" \
+            --enable-vision "$VISION" --enable-long-context "$LONGCTX" --test-filter "$FILTER" \
+            --shard-minutes "$SHARD_MIN" --stress-level "$STRESS" --max-shards 20 \
+            --github-output "$GITHUB_OUTPUT" --summary
+
+  eval:
+    name: eval / ${{ matrix.shard }}
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false                                  # one broken shard never cancels the others
+      max-parallel: ${{ fromJSON(inputs.parallel_jobs) }}
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    env:
+      OUT: ${{ github.workspace }}/out/shard-${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+
+      - name: Preflight (before downloading anything)
+        env: { POLICY: "${{ inputs.resource_policy }}" }
+        run: |
+          mkdir -p "$OUT/diagnostics" "$OUT/metadata"
+          python3 -m bench preflight --out "$OUT/diagnostics" --policy "$POLICY" --require-disk-gb 25 --min-ram-gb 12
+          # coarse host-level sampler that also covers the download phase
+          nohup bash -c 'while true; do date -u +%FT%TZ; free -m | sed -n 2,3p; df -m / | tail -1; sleep 15; done' > "$OUT/diagnostics/host_resources.log" 2>&1 &
+
+      - name: Swap (best effort, result is logged not swallowed)
+        run: |
+          {
+            echo "before:"; swapon --show; free -m | sed -n 3p
+            sudo fallocate -l 8G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile || echo "swap setup failed (continuing)"
+            echo "after:"; swapon --show; free -m | sed -n 3p
+          } 2>&1 | tee "$OUT/diagnostics/swap.log"
+
+      - name: Install Pillow (vision shard only)
+        if: matrix.vision
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq python3-pil
+
+      - name: Download + verify model, projector and runtime
+        env: { NEED_MM: "${{ matrix.vision }}" }
+        run: bash scripts/prepare_model.sh "$OUT/metadata" "$NEED_MM"
+
+      - name: Run shard
+        env:
+          MAXTOK: ${{ inputs.max_tokens }}
+          TEMP: ${{ inputs.temperature }}
+          TOPP: ${{ inputs.top_p }}
+          THINK: ${{ inputs.thinking }}
+          SEED: ${{ inputs.seed }}
+          SUITES: ${{ inputs.suites }}
+          REPEAT: ${{ inputs.repeat }}
+          LCL: ${{ inputs.long_context_levels }}
+          VISION: ${{ inputs.enable_vision }}
+          LONGCTX: ${{ inputs.enable_long_context }}
+          FILTER: ${{ inputs.test_filter }}
+          SHARD_MIN: ${{ inputs.shard_minutes }}
+          BUDGET: ${{ inputs.budget_minutes }}
+          STRESS: ${{ inputs.stress_level }}
+          CTXIN: ${{ inputs.context_size }}
+        run: |
+          ARGS=(run --shard "${{ matrix.shard }}" --out-dir "$OUT" --run-id "$RUN_ID"
+                --llama-server ./bin/llama-server --model "./models/Ternary-Bonsai-2-27B-PQ2_0.gguf"
+                --model-info "$OUT/metadata/model_info.json" --threads "$(nproc)"
+                --suites "$SUITES" --repeat "$REPEAT" --ctx "$CTXIN" --long-context-levels "$LCL"
+                --enable-vision "$VISION" --enable-long-context "$LONGCTX" --test-filter "$FILTER"
+                --shard-minutes "$SHARD_MIN" --stress-level "$STRESS" --max-tokens "$MAXTOK"
+                --thinking "$THINK" --seed "$SEED" --budget-minutes "$BUDGET")
+          [ -n "$TEMP" ] && ARGS+=(--temperature "$TEMP")
+          [ -n "$TOPP" ] && ARGS+=(--top-p "$TOPP")
+          [ "${{ matrix.vision }}" = "true" ] && ARGS+=(--mmproj "./models/Ternary-Bonsai-2-27B-mmproj-Q8_0.gguf")
+          python3 -m bench "${ARGS[@]}"
+
+      - name: Collect failure diagnostics
+        if: always()
+        run: |
+          mkdir -p "$OUT/diagnostics"
+          { echo "== free"; free -m; echo "== df"; df -h /; echo "== swap"; swapon --show; echo "== processes by RSS"; ps -eo pid,rss,etime,cmd --sort=-rss | head -8; } > "$OUT/diagnostics/final_state.txt" 2>&1 || true
+          { echo "== OOM killer evidence (dmesg)"; sudo dmesg 2>/dev/null | grep -iE "out of memory|oom-kill|killed process" | tail -20 || echo "none found / dmesg unavailable"; } > "$OUT/diagnostics/oom_check.txt" 2>&1 || true
+          tail -n 120 "$OUT/diagnostics/server.log" > "$OUT/diagnostics/server_tail.log" 2>/dev/null || true
+
+      - name: Upload shard artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shard-${{ matrix.shard }}
+          path: out/shard-${{ matrix.shard }}
+          retention-days: 30
+          if-no-files-found: warn
+
+  aggregate:
+    name: aggregate report
+    needs: [plan, eval]
+    if: ${{ always() && needs.plan.result == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: shard-*
+          path: collected
+      - name: Build consolidated report + assemble artifact tree
+        env: { EXPECTED: "${{ needs.plan.outputs.expected_shards }}" }
+        run: |
+          R="benchmark-run-$RUN_ID"; mkdir -p "$R/metadata" "$R/diagnostics" "$R/suites"
+          python3 -m pip install --quiet --break-system-packages matplotlib || echo "matplotlib unavailable; charts skipped"
+          python3 -m bench aggregate --in-dir collected --out-dir "$R/reports" --run-id "$RUN_ID" --expected-shards "$EXPECTED" > /dev/null
+          for d in collected/shard-*; do s=$(basename "$d"); mkdir -p "$R/suites/$s"; cp -r "$d"/. "$R/suites/$s/"; done
+          F=$(ls -d collected/shard-* | head -1)                       # run-level metadata is identical across shards
+          cp "$F"/metadata/run_config.json "$F"/metadata/model_info.json "$F"/metadata/runtime_info.json "$R/metadata/" 2>/dev/null || true
+          cp "$F"/diagnostics/environment.json "$R/metadata/" 2>/dev/null || true
+          for d in collected/shard-*; do s=$(basename "$d"); cp "$d"/diagnostics/preflight.txt "$R/diagnostics/preflight_$s.txt" 2>/dev/null || true; done
+          python3 -m bench manifest --root "$R" --run-id "$RUN_ID"
+          cat "$R/reports/overall.md" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-run-${{ env.RUN_ID }}
+          path: benchmark-run-${{ env.RUN_ID }}
+          retention-days: 60
+
+  publish:
+    name: publish to benchmark-results branch
+    needs: [aggregate]
+    if: ${{ always() && inputs.publish && needs.aggregate.result == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write                       # the ONLY job with write access
+    concurrency:
+      group: benchmark-results-publish      # exactly one publisher at a time
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: actions/download-artifact@v4
+        with:
+          name: benchmark-run-${{ env.RUN_ID }}
+          path: run
+      - name: Commit compact results (no models, no binaries, no raw per-test dumps)
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: |
+          set -euo pipefail
+          WORK="$RUNNER_TEMP/pub"; rm -rf "$WORK"; mkdir -p "$WORK"; cd "$WORK"
+          git init -q; git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git ls-remote --exit-code --heads origin benchmark-results >/dev/null 2>&1; then
+            git fetch -q --depth 1 origin benchmark-results; git checkout -q -B benchmark-results FETCH_HEAD
+          else git checkout -q --orphan benchmark-results; fi
+          DATE=$(date -u +%F); DEST="results/historical/${DATE}_run-${RUN_ID}"
+          mkdir -p "$DEST" results/latest
+          SRC="$GITHUB_WORKSPACE/run/reports"
+          cp -r "$SRC"/. "$DEST"/
+          python3 "$GITHUB_WORKSPACE/scripts/update_index.py" "$SRC" results "$RUN_ID"
+          rm -rf results/latest/summary* ; cp "$SRC/overall.json" results/latest/summary.json; cp "$SRC/overall.csv" results/latest/summary.csv; cp "$SRC/overall.md" results/latest/summary.md
+          git add -A
+          git -c user.name="bonsai-bench[bot]" -c user.email="actions@users.noreply.github.com" commit -q -m "benchmark results: run ${RUN_ID}" || { echo "nothing to commit"; exit 0; }
+          for i in 1 2 3; do git push -q origin HEAD:benchmark-results && break || { git pull -q --rebase origin benchmark-results; sleep 3; }; done

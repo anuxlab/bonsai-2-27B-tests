@@ -1,49 +1,361 @@
 [
-  {
-    "id": "basic-01",
-    "category": "basic",
-    "prompt": "What is 7 × 8? Reply with only the number.",
-    "expected_contains": [
-      "56"
-    ]
+ {
+  "id": "basic-01",
+  "level": 1,
+  "category": "arithmetic",
+  "prompt": "What is 7 × 8? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 56
   },
-  {
-    "id": "basic-02",
-    "category": "basic",
-    "prompt": "In one sentence, explain what a CPU does.",
-    "min_words": 8
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "56",
+  "wrong": "54"
+ },
+ {
+  "id": "basic-02",
+  "level": 1,
+  "category": "arithmetic",
+  "prompt": "What is 1,234 + 5,678? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 6912
   },
-  {
-    "id": "basic-03",
-    "category": "instruction-following",
-    "prompt": "Reply with exactly these three lines, no extra text:\nalpha\nbeta\ngamma",
-    "expected_contains": [
-      "alpha",
-      "beta",
-      "gamma"
-    ],
-    "expected_lines": [
-      "alpha",
-      "beta",
-      "gamma"
-    ]
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "6912",
+  "wrong": "6812"
+ },
+ {
+  "id": "basic-03",
+  "level": 1,
+  "category": "arithmetic",
+  "prompt": "What is 144 divided by 12? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 12
   },
-  {
-    "id": "basic-04",
-    "category": "instruction-following",
-    "prompt": "Return only valid JSON with keys 'status' and 'count', values 'ok' and 3.",
-    "json_required": true,
-    "json_keys": [
-      "status",
-      "count"
-    ]
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "12",
+  "wrong": "14"
+ },
+ {
+  "id": "basic-04",
+  "level": 2,
+  "category": "arithmetic",
+  "prompt": "What is 15% of 240? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 36
   },
-  {
-    "id": "basic-05",
-    "category": "knowledge",
-    "prompt": "What is the capital of Japan? Reply with the city only.",
-    "expected_contains": [
-      "Tokyo"
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "36",
+  "wrong": "24"
+ },
+ {
+  "id": "basic-05",
+  "level": 1,
+  "category": "knowledge",
+  "prompt": "What is the capital of Australia? Reply with the city name only.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "Canberra"
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "Canberra",
+  "wrong": "Sydney"
+ },
+ {
+  "id": "basic-06",
+  "level": 1,
+  "category": "knowledge",
+  "prompt": "What is the chemical symbol for gold? Reply with the symbol only.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "Au"
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "Au",
+  "wrong": "Ag"
+ },
+ {
+  "id": "basic-07",
+  "level": 1,
+  "category": "knowledge",
+  "prompt": "Which planet in our solar system is the largest? Reply with the planet name only.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "Jupiter"
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "Jupiter",
+  "wrong": "Saturn"
+ },
+ {
+  "id": "basic-08",
+  "level": 1,
+  "category": "knowledge",
+  "prompt": "Who wrote the play 'Hamlet'? Reply with the author's name only.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "William Shakespeare",
+    "Shakespeare"
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "William Shakespeare",
+  "wrong": "Christopher Marlowe"
+ },
+ {
+  "id": "basic-09",
+  "level": 1,
+  "category": "instruction-following",
+  "prompt": "Reply with exactly these three lines, no extra text:\nalpha\nbeta\ngamma",
+  "grade": {
+   "type": "lines",
+   "answer": [
+    "alpha",
+    "beta",
+    "gamma"
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "alpha\nbeta\ngamma",
+  "wrong": "alpha, beta, gamma"
+ },
+ {
+  "id": "basic-10",
+  "level": 1,
+  "category": "structured-output",
+  "prompt": "Return only valid JSON with keys 'status' and 'count', with values \"ok\" and 3.",
+  "grade": {
+   "type": "json",
+   "schema": {
+    "type": "object",
+    "required": [
+     "status",
+     "count"
     ]
-  }
+   },
+   "equals": {
+    "status": "ok",
+    "count": 3
+   }
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "{\"status\": \"ok\", \"count\": 3}",
+  "wrong": "Here you go: {\"status\": \"ok\", \"count\": 3}"
+ },
+ {
+  "id": "basic-11",
+  "level": 2,
+  "category": "instruction-following",
+  "prompt": "List exactly three fruits, one per line, all lowercase, with no numbering, bullets or other text.",
+  "grade": {
+   "type": "constraints",
+   "checks": [
+    {
+     "type": "n_lines",
+     "n": 3
+    },
+    {
+     "type": "lowercase"
+    },
+    {
+     "type": "no_digits"
+    },
+    {
+     "type": "regex",
+     "pattern": "\\A(?:[a-z ]+\\n?){3}\\Z"
+    }
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "apple\nbanana\ncherry",
+  "wrong": "1. Apple\n2. Banana\n3. Cherry"
+ },
+ {
+  "id": "basic-12",
+  "level": 2,
+  "category": "string-manipulation",
+  "prompt": "Reverse the word 'stressed'. Reply with only the reversed word.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "desserts"
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "desserts",
+  "wrong": "sserts"
+ },
+ {
+  "id": "basic-13",
+  "level": 1,
+  "category": "translation",
+  "prompt": "Translate 'Good morning' into Spanish. Reply with only the translation.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "buenos días",
+    "buenos dias"
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "Buenos días",
+  "wrong": "Buenas noches"
+ },
+ {
+  "id": "basic-14",
+  "level": 1,
+  "category": "unit-conversion",
+  "prompt": "How many minutes are in 2.5 hours? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 150
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "150",
+  "wrong": "120"
+ },
+ {
+  "id": "basic-15",
+  "level": 1,
+  "category": "knowledge",
+  "prompt": "Which day of the week comes right after Thursday? Reply with one word.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "Friday"
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "Friday",
+  "wrong": "Wednesday"
+ },
+ {
+  "id": "basic-16",
+  "level": 2,
+  "category": "tokenization-trap",
+  "prompt": "How many times does the letter 'r' appear in the word 'strawberry'? Reply with only the number.",
+  "grade": {
+   "type": "numeric",
+   "answer": 3
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "3",
+  "wrong": "2"
+ },
+ {
+  "id": "basic-17",
+  "level": 2,
+  "category": "sorting",
+  "prompt": "Sort these numbers in ascending order and reply with only a comma-separated list: 42, 7, 19, 3, 88",
+  "grade": {
+   "type": "number_list",
+   "answer": [
+    3,
+    7,
+    19,
+    42,
+    88
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "3, 7, 19, 42, 88",
+  "wrong": "88, 42, 19, 7, 3"
+ },
+ {
+  "id": "basic-18",
+  "level": 2,
+  "category": "number-theory",
+  "prompt": "Is 91 a prime number? Answer with only yes or no.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "no"
+   ]
+  },
+  "max_tokens": 300,
+  "est_out_tokens": 60,
+  "tags": [
+   "basic"
+  ],
+  "reference": "No",
+  "wrong": "Yes"
+ }
 ]

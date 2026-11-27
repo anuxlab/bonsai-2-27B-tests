@@ -1,0 +1,27 @@
+[
+ {
+  "gen": "long_context",
+  "label": "1k",
+  "tokens": 1024,
+  "seed": 11
+ },
+ {
+  "gen": "long_context",
+  "label": "2k",
+  "tokens": 2048,
+  "seed": 12
+ },
+ {
+  "gen": "long_context",
+  "label": "4k",
+  "tokens": 4096,
+  "seed": 13
+ },
+ {
+  "gen": "long_context",
+  "label": "8k",
+  "tokens": 8192,
+  "seed": 14,
+  "opt_in": true
+ }
+]

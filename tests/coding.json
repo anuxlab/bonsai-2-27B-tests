@@ -1,44 +1,939 @@
 [
-  {
-    "id": "code-01",
-    "category": "coding",
-    "prompt": "Write a Python function is_even(n) that returns True if n is even and False otherwise. Output code only.",
-    "code_required": true,
-    "expected_regex": "def\\s+is_even\\s*\\("
-  },
-  {
-    "id": "code-02",
-    "category": "coding",
-    "prompt": "Write a Python function that returns the factorial of a non-negative integer, handling 0. Include a ValueError for negative input. Code only.",
-    "code_required": true,
-    "expected_regex": "def\\s+\\w+\\s*\\(",
-    "expected_contains": [
-      "ValueError"
+ {
+  "id": "code-01",
+  "level": 1,
+  "category": "function",
+  "prompt": "Write a Python function `is_even(n)` that returns True if the integer n is even and False otherwise (negative numbers included).\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "is_even"
+   ],
+   "tests": [
+    [
+     "is_even(4)",
+     true
+    ],
+    [
+     "is_even(7)",
+     false
+    ],
+    [
+     "is_even(0)",
+     true
+    ],
+    [
+     "is_even(-2)",
+     true
+    ],
+    [
+     "is_even(-3)",
+     false
+    ],
+    [
+     "is_even(10**12)",
+     true
     ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
   },
-  {
-    "id": "code-03",
-    "category": "debugging",
-    "prompt": "Fix this Python function and output the corrected code only: def average(nums): return sum(nums) / len(nums)  It should return 0 for an empty list.",
-    "code_required": true,
-    "expected_contains": [
-      "return 0"
+  "max_tokens": 400,
+  "est_out_tokens": 120,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef is_even(n):\n    return n % 2 == 0\n```",
+  "wrong": "```python\ndef is_even(n):\n    return n > 0 and n % 2 == 0\n```"
+ },
+ {
+  "id": "code-02",
+  "level": 1,
+  "category": "edge-cases",
+  "prompt": "Write `factorial(n)` for non-negative integers (factorial(0) is 1). Raise ValueError if n is negative.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "factorial"
+   ],
+   "tests": [
+    [
+     "factorial(0)",
+     1
+    ],
+    [
+     "factorial(5)",
+     120
+    ],
+    [
+     "factorial(10)",
+     3628800
+    ],
+    [
+     "factorial(20)",
+     2432902008176640000
+    ],
+    [
+     "factorial(-1)",
+     {
+      "raises": "ValueError"
+     }
     ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
   },
-  {
-    "id": "code-04",
-    "category": "algorithm",
-    "prompt": "Implement binary search in Python for a sorted list. Return the index or -1. Code only.",
-    "code_required": true,
-    "expected_regex": "def\\s+\\w+\\s*\\(",
-    "expected_contains": [
-      "while"
+  "max_tokens": 400,
+  "est_out_tokens": 120,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef factorial(n):\n    if n < 0:\n        raise ValueError('negative')\n    r = 1\n    for i in range(2, n + 1):\n        r *= i\n    return r\n```",
+  "wrong": "```python\ndef factorial(n):\n    r = 1\n    for i in range(2, n + 1):\n        r *= i\n    return r\n```"
+ },
+ {
+  "id": "code-03",
+  "level": 1,
+  "category": "strings",
+  "prompt": "Write `reverse_words(s)` that returns the words of s in reverse order, joined by a single space. Words are separated by any amount of whitespace; leading/trailing whitespace is ignored.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "reverse_words"
+   ],
+   "tests": [
+    [
+     "reverse_words('hello world')",
+     "world hello"
+    ],
+    [
+     "reverse_words('  a   b  c ')",
+     "c b a"
+    ],
+    [
+     "reverse_words('')",
+     ""
+    ],
+    [
+     "reverse_words('one')",
+     "one"
     ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
   },
-  {
-    "id": "code-05",
-    "category": "explanation",
-    "prompt": "Explain the difference between a list and a tuple in Python, with one small example each.",
-    "min_words": 35
-  }
+  "max_tokens": 400,
+  "est_out_tokens": 120,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef reverse_words(s):\n    return ' '.join(reversed(s.split()))\n```",
+  "wrong": "```python\ndef reverse_words(s):\n    return s[::-1]\n```"
+ },
+ {
+  "id": "code-04",
+  "level": 2,
+  "category": "function",
+  "prompt": "Write `fizzbuzz(n)` returning a list of strings for 1..n: 'Fizz' for multiples of 3, 'Buzz' for multiples of 5, 'FizzBuzz' for both, otherwise the number as a string. fizzbuzz(0) returns [].\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "fizzbuzz"
+   ],
+   "tests": [
+    [
+     "fizzbuzz(0)",
+     []
+    ],
+    [
+     "fizzbuzz(5)",
+     [
+      "1",
+      "2",
+      "Fizz",
+      "4",
+      "Buzz"
+     ]
+    ],
+    [
+     "fizzbuzz(15)[-1]",
+     "FizzBuzz"
+    ],
+    [
+     "fizzbuzz(15)[2]",
+     "Fizz"
+    ],
+    [
+     "len(fizzbuzz(100))",
+     100
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 700,
+  "est_out_tokens": 250,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef fizzbuzz(n):\n    out = []\n    for i in range(1, n + 1):\n        s = ('Fizz' if i % 3 == 0 else '') + ('Buzz' if i % 5 == 0 else '')\n        out.append(s or str(i))\n    return out\n```",
+  "wrong": "```python\ndef fizzbuzz(n):\n    return ['FizzBuzz' if i % 3 == 0 else 'Buzz' if i % 5 == 0 else str(i) for i in range(1, n + 1)]\n```"
+ },
+ {
+  "id": "code-05",
+  "level": 2,
+  "category": "strings",
+  "prompt": "Write `is_palindrome(s)` that returns True if s reads the same forwards and backwards, ignoring case and all non-alphanumeric characters. The empty string is a palindrome.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "is_palindrome"
+   ],
+   "tests": [
+    [
+     "is_palindrome('A man, a plan, a canal: Panama')",
+     true
+    ],
+    [
+     "is_palindrome('race a car')",
+     false
+    ],
+    [
+     "is_palindrome('')",
+     true
+    ],
+    [
+     "is_palindrome('No lemon, no melon')",
+     true
+    ],
+    [
+     "is_palindrome('ab')",
+     false
+    ],
+    [
+     "is_palindrome('0P')",
+     false
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 700,
+  "est_out_tokens": 250,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef is_palindrome(s):\n    t = [c.lower() for c in s if c.isalnum()]\n    return t == t[::-1]\n```",
+  "wrong": "```python\ndef is_palindrome(s):\n    return s == s[::-1]\n```"
+ },
+ {
+  "id": "code-06",
+  "level": 2,
+  "category": "algorithm",
+  "prompt": "Implement binary search: `binary_search(arr, target)` on a sorted list of distinct integers returns the index of target or -1 if absent.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "binary_search"
+   ],
+   "tests": [
+    [
+     "binary_search([1,3,5,7,9],7)",
+     3
+    ],
+    [
+     "binary_search([1,3,5,7,9],1)",
+     0
+    ],
+    [
+     "binary_search([1,3,5,7,9],9)",
+     4
+    ],
+    [
+     "binary_search([1,3,5,7,9],4)",
+     -1
+    ],
+    [
+     "binary_search([],1)",
+     -1
+    ],
+    [
+     "binary_search([5],5)",
+     0
+    ],
+    [
+     "binary_search(list(range(0,2000000,2)),1999998)",
+     999999
+    ],
+    [
+     "binary_search(list(range(0,2000000,2)),1999999)",
+     -1
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 700,
+  "est_out_tokens": 250,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef binary_search(arr, target):\n    lo, hi = 0, len(arr) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if arr[mid] == target:\n            return mid\n        if arr[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return -1\n```",
+  "wrong": "```python\ndef binary_search(arr, target):\n    lo, hi = 0, len(arr) - 1\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if arr[mid] == target:\n            return mid\n        if arr[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return -1\n```"
+ },
+ {
+  "id": "code-07",
+  "level": 2,
+  "category": "debugging",
+  "prompt": "This function has bugs:\n\n```python\ndef second_largest(nums):\n    nums.sort()\n    return nums[-2]\n```\n\nFix it. It must return the second largest DISTINCT value, return None if there are fewer than two distinct values, and must not modify the input list.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "second_largest"
+   ],
+   "tests": [
+    [
+     "second_largest([3,1,2])",
+     2
+    ],
+    [
+     "second_largest([5,5,4])",
+     4
+    ],
+    [
+     "second_largest([5,5])",
+     null
+    ],
+    [
+     "second_largest([])",
+     null
+    ],
+    [
+     "second_largest([1])",
+     null
+    ],
+    [
+     "(lambda a: (second_largest(a), a)[1])([3,1,2])",
+     [
+      3,
+      1,
+      2
+     ]
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 700,
+  "est_out_tokens": 250,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef second_largest(nums):\n    d = sorted(set(nums))\n    return d[-2] if len(d) >= 2 else None\n```",
+  "wrong": "```python\ndef second_largest(nums):\n    nums.sort()\n    return nums[-2]\n```"
+ },
+ {
+  "id": "code-08",
+  "level": 3,
+  "category": "algorithm",
+  "prompt": "Write `merge_intervals(intervals)`: given a list of [start, end] pairs (possibly unsorted), merge all overlapping or touching intervals and return them sorted by start as a list of [start, end] lists.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "merge_intervals"
+   ],
+   "tests": [
+    [
+     "merge_intervals([[1,3],[2,6],[8,10],[15,18]])",
+     [
+      [
+       1,
+       6
+      ],
+      [
+       8,
+       10
+      ],
+      [
+       15,
+       18
+      ]
+     ]
+    ],
+    [
+     "merge_intervals([[1,4],[4,5]])",
+     [
+      [
+       1,
+       5
+      ]
+     ]
+    ],
+    [
+     "merge_intervals([])",
+     []
+    ],
+    [
+     "merge_intervals([[8,10],[1,3],[2,6]])",
+     [
+      [
+       1,
+       6
+      ],
+      [
+       8,
+       10
+      ]
+     ]
+    ],
+    [
+     "merge_intervals([[1,10],[2,3]])",
+     [
+      [
+       1,
+       10
+      ]
+     ]
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 1100,
+  "est_out_tokens": 450,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef merge_intervals(intervals):\n    out = []\n    for s, e in sorted(intervals):\n        if out and s <= out[-1][1]:\n            out[-1][1] = max(out[-1][1], e)\n        else:\n            out.append([s, e])\n    return out\n```",
+  "wrong": "```python\ndef merge_intervals(intervals):\n    out = []\n    for s, e in intervals:\n        if out and s < out[-1][1]:\n            out[-1][1] = e\n        else:\n            out.append([s, e])\n    return out\n```"
+ },
+ {
+  "id": "code-09",
+  "level": 3,
+  "category": "complexity-awareness",
+  "prompt": "Write `two_sum(nums, target)` returning the indices [i, j] with i < j such that nums[i] + nums[j] == target. Exactly one solution exists. It must be efficient enough for 50,000 elements.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "two_sum"
+   ],
+   "tests": [
+    [
+     "two_sum([2,7,11,15],9)",
+     [
+      0,
+      1
+     ]
+    ],
+    [
+     "two_sum([3,2,4],6)",
+     [
+      1,
+      2
+     ]
+    ],
+    [
+     "two_sum([3,3],6)",
+     [
+      0,
+      1
+     ]
+    ],
+    [
+     "two_sum(list(range(50000)),99997)",
+     [
+      49998,
+      49999
+     ]
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 1100,
+  "est_out_tokens": 450,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef two_sum(nums, target):\n    seen = {}\n    for j, x in enumerate(nums):\n        if target - x in seen:\n            return [seen[target - x], j]\n        seen[x] = j\n```",
+  "wrong": "```python\ndef two_sum(nums, target):\n    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            if nums[i] + nums[j] == target:\n                return [i, j]\n```"
+ },
+ {
+  "id": "code-10",
+  "level": 3,
+  "category": "data-structure",
+  "prompt": "Implement a class `LRUCache(capacity)` with `get(key)` (returns the value or -1; marks the key as recently used) and `put(key, value)` (inserts or updates and marks as recently used; evicts the least recently used key when over capacity; returns None).\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "LRUCache"
+   ],
+   "tests": [
+    [
+     "(lambda c: [c.put(1,1), c.put(2,2), c.get(1), c.put(3,3), c.get(2), c.put(4,4), c.get(1), c.get(3), c.get(4)])(LRUCache(2))",
+     [
+      null,
+      null,
+      1,
+      null,
+      -1,
+      null,
+      -1,
+      3,
+      4
+     ]
+    ],
+    [
+     "(lambda c: [c.put(1,1), c.put(2,2), c.put(1,10), c.put(3,3), c.get(1), c.get(2)])(LRUCache(2))",
+     [
+      null,
+      null,
+      null,
+      null,
+      10,
+      -1
+     ]
+    ],
+    [
+     "(lambda c: [c.put(1,1), c.put(2,2), c.get(1), c.get(2)])(LRUCache(1))",
+     [
+      null,
+      null,
+      -1,
+      2
+     ]
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 1100,
+  "est_out_tokens": 450,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\nfrom collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity):\n        self.cap = capacity\n        self.d = OrderedDict()\n\n    def get(self, key):\n        if key not in self.d:\n            return -1\n        self.d.move_to_end(key)\n        return self.d[key]\n\n    def put(self, key, value):\n        if key in self.d:\n            self.d.move_to_end(key)\n        self.d[key] = value\n        if len(self.d) > self.cap:\n            self.d.popitem(last=False)\n```",
+  "wrong": "```python\nclass LRUCache:\n    def __init__(self, capacity):\n        self.cap = capacity\n        self.d = {}\n\n    def get(self, key):\n        return self.d.get(key, -1)\n\n    def put(self, key, value):\n        self.d[key] = value\n        if len(self.d) > self.cap:\n            del self.d[next(iter(self.d))]\n```"
+ },
+ {
+  "id": "code-11",
+  "level": 3,
+  "category": "parsing",
+  "prompt": "Write `parse_csv_line(line)` that splits one CSV line into a list of fields. Fields may be wrapped in double quotes; quoted fields can contain commas, and a doubled quote (\"\") inside a quoted field means a literal quote. An empty line gives [''].\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "parse_csv_line"
+   ],
+   "tests": [
+    [
+     "parse_csv_line('a,b,c')",
+     [
+      "a",
+      "b",
+      "c"
+     ]
+    ],
+    [
+     "parse_csv_line('a,\"b,c\",d')",
+     [
+      "a",
+      "b,c",
+      "d"
+     ]
+    ],
+    [
+     "parse_csv_line('\"he said \"\"hi\"\"\"')",
+     [
+      "he said \"hi\""
+     ]
+    ],
+    [
+     "parse_csv_line('')",
+     [
+      ""
+     ]
+    ],
+    [
+     "parse_csv_line('a,,c')",
+     [
+      "a",
+      "",
+      "c"
+     ]
+    ],
+    [
+     "parse_csv_line(',')",
+     [
+      "",
+      ""
+     ]
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 1100,
+  "est_out_tokens": 450,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef parse_csv_line(line):\n    fields, cur, i, q = [], [], 0, False\n    while i < len(line):\n        ch = line[i]\n        if q:\n            if ch == '\"':\n                if i + 1 < len(line) and line[i + 1] == '\"':\n                    cur.append('\"')\n                    i += 1\n                else:\n                    q = False\n            else:\n                cur.append(ch)\n        elif ch == '\"':\n            q = True\n        elif ch == ',':\n            fields.append(''.join(cur))\n            cur = []\n        else:\n            cur.append(ch)\n        i += 1\n    fields.append(''.join(cur))\n    return fields\n```",
+  "wrong": "```python\ndef parse_csv_line(line):\n    return line.split(',')\n```"
+ },
+ {
+  "id": "code-12",
+  "level": 2,
+  "category": "data-processing",
+  "prompt": "Write `top_k_frequent(words, k)` returning the k most frequent words, ordered by descending frequency; ties are broken alphabetically. If there are fewer than k distinct words return them all.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "top_k_frequent"
+   ],
+   "tests": [
+    [
+     "top_k_frequent(['i','love','leetcode','i','love','coding'],2)",
+     [
+      "i",
+      "love"
+     ]
+    ],
+    [
+     "top_k_frequent(['the','day','is','sunny','the','the','the','sunny','is','is'],4)",
+     [
+      "the",
+      "is",
+      "sunny",
+      "day"
+     ]
+    ],
+    [
+     "top_k_frequent(['b','a','b','a','c'],2)",
+     [
+      "a",
+      "b"
+     ]
+    ],
+    [
+     "top_k_frequent([],3)",
+     []
+    ],
+    [
+     "top_k_frequent(['b','a'],5)",
+     [
+      "a",
+      "b"
+     ]
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 700,
+  "est_out_tokens": 250,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\nfrom collections import Counter\n\ndef top_k_frequent(words, k):\n    c = Counter(words)\n    return sorted(c, key=lambda w: (-c[w], w))[:k]\n```",
+  "wrong": "```python\nfrom collections import Counter\n\ndef top_k_frequent(words, k):\n    return [w for w, _ in Counter(words).most_common(k)]\n```"
+ },
+ {
+  "id": "code-13",
+  "level": 3,
+  "category": "algorithm",
+  "prompt": "Write `spiral_order(matrix)` returning all elements of a (possibly non-square, possibly empty) 2D list in clockwise spiral order starting at the top-left.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "spiral_order"
+   ],
+   "tests": [
+    [
+     "spiral_order([[1,2,3],[4,5,6],[7,8,9]])",
+     [
+      1,
+      2,
+      3,
+      6,
+      9,
+      8,
+      7,
+      4,
+      5
+     ]
+    ],
+    [
+     "spiral_order([[1,2,3,4],[5,6,7,8],[9,10,11,12]])",
+     [
+      1,
+      2,
+      3,
+      4,
+      8,
+      12,
+      11,
+      10,
+      9,
+      5,
+      6,
+      7
+     ]
+    ],
+    [
+     "spiral_order([[1]])",
+     [
+      1
+     ]
+    ],
+    [
+     "spiral_order([])",
+     []
+    ],
+    [
+     "spiral_order([[1],[2],[3]])",
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    [
+     "spiral_order([[1,2,3]])",
+     [
+      1,
+      2,
+      3
+     ]
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 1100,
+  "est_out_tokens": 450,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef spiral_order(matrix):\n    res = []\n    m = [row[:] for row in matrix]\n    while m:\n        res += m.pop(0)\n        m = [list(r) for r in zip(*m)][::-1]\n    return res\n```",
+  "wrong": "```python\ndef spiral_order(matrix):\n    return [x for r in matrix for x in r]\n```"
+ },
+ {
+  "id": "code-14",
+  "level": 2,
+  "category": "function",
+  "prompt": "Write `int_to_roman(n)` converting an integer from 1 to 3999 to a Roman numeral string.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "int_to_roman"
+   ],
+   "tests": [
+    [
+     "int_to_roman(3)",
+     "III"
+    ],
+    [
+     "int_to_roman(4)",
+     "IV"
+    ],
+    [
+     "int_to_roman(9)",
+     "IX"
+    ],
+    [
+     "int_to_roman(58)",
+     "LVIII"
+    ],
+    [
+     "int_to_roman(1994)",
+     "MCMXCIV"
+    ],
+    [
+     "int_to_roman(3999)",
+     "MMMCMXCIX"
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 700,
+  "est_out_tokens": 250,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef int_to_roman(n):\n    out = ''\n    for v, s in [(1000,'M'),(900,'CM'),(500,'D'),(400,'CD'),(100,'C'),(90,'XC'),(50,'L'),(40,'XL'),(10,'X'),(9,'IX'),(5,'V'),(4,'IV'),(1,'I')]:\n        while n >= v:\n            out += s\n            n -= v\n    return out\n```",
+  "wrong": "```python\ndef int_to_roman(n):\n    out = ''\n    for v, s in [(1000,'M'),(500,'D'),(100,'C'),(50,'L'),(10,'X'),(5,'V'),(1,'I')]:\n        while n >= v:\n            out += s\n            n -= v\n    return out\n```"
+ },
+ {
+  "id": "code-15",
+  "level": 4,
+  "category": "dynamic-programming",
+  "prompt": "Write `min_coins(coins, amount)` returning the fewest coins (unlimited supply of each denomination) needed to make `amount`, or -1 if impossible. min_coins(coins, 0) is 0. It must handle amount up to 10,000 quickly.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "min_coins"
+   ],
+   "tests": [
+    [
+     "min_coins([1,2,5],11)",
+     3
+    ],
+    [
+     "min_coins([2],3)",
+     -1
+    ],
+    [
+     "min_coins([1],0)",
+     0
+    ],
+    [
+     "min_coins([1,3,4],6)",
+     2
+    ],
+    [
+     "min_coins([5,3],4)",
+     -1
+    ],
+    [
+     "min_coins([186,419,83,408],6249)",
+     20
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40
+  },
+  "max_tokens": 1500,
+  "est_out_tokens": 700,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef min_coins(coins, amount):\n    INF = float('inf')\n    dp = [0] + [INF] * amount\n    for a in range(1, amount + 1):\n        for c in coins:\n            if c <= a and dp[a - c] + 1 < dp[a]:\n                dp[a] = dp[a - c] + 1\n    return -1 if dp[amount] == INF else dp[amount]\n```",
+  "wrong": "```python\ndef min_coins(coins, amount):\n    n = 0\n    for c in sorted(coins, reverse=True):\n        n += amount // c\n        amount %= c\n    return n if amount == 0 else -1\n```"
+ },
+ {
+  "id": "code-16",
+  "level": 3,
+  "category": "unit-test-generation",
+  "prompt": "Here is a function:\n\n```python\ndef clamp(x, lo, hi):\n    if lo > hi:\n        raise ValueError('lo must be <= hi')\n    return max(lo, min(x, hi))\n```\n\nWrite plain test functions (names starting with `test_`, using `assert`, no pytest import) that thoroughly check it: values inside the range, below, above, exactly on both boundaries, and lo > hi raising ValueError. Do NOT include the clamp implementation itself. Output only one Python code block.",
+  "grade": {
+   "type": "unit_tests",
+   "entry": [
+    "clamp"
+   ],
+   "impl": "def clamp(x, lo, hi):\n    if lo > hi:\n        raise ValueError('lo must be <= hi')\n    return max(lo, min(x, hi))\n",
+   "mutants": [
+    "def clamp(x, lo, hi):\n    if lo > hi:\n        raise ValueError('x')\n    return max(lo, min(x, hi - 1))\n",
+    "def clamp(x, lo, hi):\n    return max(lo, min(x, hi))\n",
+    "def clamp(x, lo, hi):\n    if lo > hi:\n        raise ValueError('x')\n    return min(x, hi)\n",
+    "def clamp(x, lo, hi):\n    if lo > hi:\n        raise ValueError('x')\n    if x < lo:\n        return lo\n    if x > hi:\n        return hi\n    return lo\n"
+   ],
+   "mutant_desc": [
+    "upper bound off by one",
+    "missing ValueError",
+    "ignores lower bound",
+    "returns lo for in-range values"
+   ]
+  },
+  "max_tokens": 900,
+  "est_out_tokens": 400,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef test_inside():\n    assert clamp(5, 0, 10) == 5\n\ndef test_below():\n    assert clamp(-5, 0, 10) == 0\n\ndef test_above():\n    assert clamp(50, 0, 10) == 10\n\ndef test_boundaries():\n    assert clamp(0, 0, 10) == 0\n    assert clamp(10, 0, 10) == 10\n\ndef test_invalid():\n    try:\n        clamp(1, 5, 0)\n    except ValueError:\n        pass\n    else:\n        assert False\n```",
+  "wrong": "```python\ndef test_one():\n    assert clamp(5, 0, 10) == 5\n\ndef test_two():\n    assert clamp(5, 0, 10) == 5\n\ndef test_three():\n    assert clamp(6, 0, 10) == 6\n```"
+ },
+ {
+  "id": "code-17",
+  "level": 2,
+  "category": "complexity-analysis",
+  "prompt": "What is the time complexity of this function in Big-O notation, in terms of n?\n\n```python\ndef f(n):\n    c = 0\n    for i in range(n):\n        for j in range(i, n):\n            c += 1\n    return c\n```\n\nThink it through, then give your final answer on the last line in the form `ANSWER: <answer>`.",
+  "grade": {
+   "type": "exact",
+   "answers": [
+    "O(n^2)",
+    "O(n²)",
+    "O(n**2)"
+   ],
+   "squash": true
+  },
+  "max_tokens": 1000,
+  "est_out_tokens": 400,
+  "tags": [
+   "coding"
+  ],
+  "reference": "ANSWER: O(n^2)",
+  "wrong": "ANSWER: O(n)"
+ },
+ {
+  "id": "code-18",
+  "level": 4,
+  "category": "multi-function",
+  "prompt": "Write `calc(expr)` that evaluates an arithmetic expression string containing non-negative numbers (ints or decimals), + - * /, parentheses, unary minus and spaces, with correct operator precedence and left-to-right associativity. Division by zero must raise ZeroDivisionError. You must write your own tokenizer/parser; do NOT use eval, exec or ast.\n\nOutput only one Python code block, no explanation.",
+  "grade": {
+   "type": "code",
+   "entry": [
+    "calc"
+   ],
+   "tests": [
+    [
+     "calc('2+3*4')",
+     14
+    ],
+    [
+     "calc('(2+3)*4')",
+     20
+    ],
+    [
+     "calc('-3+5')",
+     2
+    ],
+    [
+     "calc('2*(3+(4-1))/3')",
+     4
+    ],
+    [
+     "calc('10/4')",
+     2.5
+    ],
+    [
+     "calc('2*-3')",
+     -6
+    ],
+    [
+     "calc(' 7 - 2 - 1 ')",
+     4
+    ],
+    [
+     "calc('2*3+4*5')",
+     26
+    ],
+    [
+     "calc('8/4/2')",
+     1
+    ],
+    [
+     "calc('1/0')",
+     {
+      "raises": "ZeroDivisionError"
+     }
+    ]
+   ],
+   "per_test_timeout": 5,
+   "timeout": 40,
+   "forbid": [
+    "eval(",
+    "exec(",
+    "import ast"
+   ]
+  },
+  "max_tokens": 1500,
+  "est_out_tokens": 700,
+  "tags": [
+   "coding"
+  ],
+  "reference": "```python\ndef calc(expr):\n    toks = []\n    i = 0\n    while i < len(expr):\n        ch = expr[i]\n        if ch.isspace():\n            i += 1\n        elif ch.isdigit() or ch == '.':\n            j = i\n            while j < len(expr) and (expr[j].isdigit() or expr[j] == '.'):\n                j += 1\n            toks.append(float(expr[i:j]))\n            i = j\n        else:\n            toks.append(ch)\n            i += 1\n    pos = [0]\n    def peek():\n        return toks[pos[0]] if pos[0] < len(toks) else None\n    def eat():\n        pos[0] += 1\n        return toks[pos[0] - 1]\n    def expr_():\n        v = term()\n        while peek() in ('+', '-'):\n            op = eat()\n            r = term()\n            v = v + r if op == '+' else v - r\n        return v\n    def term():\n        v = unary()\n        while peek() in ('*', '/'):\n            op = eat()\n            r = unary()\n            v = v * r if op == '*' else v / r\n        return v\n    def unary():\n        if peek() == '-':\n            eat()\n            return -unary()\n        if peek() == '(':\n            eat()\n            v = expr_()\n            eat()\n            return v\n        return eat()\n    return expr_()\n```",
+  "wrong": "```python\ndef calc(expr):\n    import re\n    t = re.findall(r'\\d+\\.?\\d*|[-+*/]', expr.replace(' ', ''))\n    v = float(t[0])\n    for i in range(1, len(t), 2):\n        o, n = t[i], float(t[i + 1])\n        v = v + n if o == '+' else v - n if o == '-' else v * n if o == '*' else v / n\n    return v\n```"
+ }
 ]

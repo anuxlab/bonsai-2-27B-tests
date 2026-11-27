@@ -3,3 +3,11 @@ results/
 runtime.tar.gz
 bin/
 __pycache__/
+models/
+bin/
+out/
+collected/
+report/
+runtime.tar.gz
+*.gguf
+__pycache__/

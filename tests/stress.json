@@ -1,0 +1,178 @@
+[
+ {
+  "id": "stress-01-sequential-burst",
+  "kind": "proc",
+  "proc": "stress_burst",
+  "level": 3,
+  "category": "repeated-requests",
+  "params": {
+   "n_by_level": {
+    "low": 6,
+    "medium": 12,
+    "high": 24
+   },
+   "max_tokens": 12
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "stress",
+   "heavy"
+  ],
+  "est_out_tokens": 120,
+  "est_prompt_tokens": 200,
+  "order": 5
+ },
+ {
+  "id": "stress-02-long-generation",
+  "kind": "proc",
+  "proc": "stress_long_generation",
+  "level": 3,
+  "category": "long-generation",
+  "params": {
+   "tokens_by_level": {
+    "low": 192,
+    "medium": 384,
+    "high": 768
+   }
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "stress",
+   "heavy"
+  ],
+  "est_out_tokens": 384,
+  "est_prompt_tokens": 20,
+  "order": 5
+ },
+ {
+  "id": "stress-03-mixed-sizes",
+  "kind": "proc",
+  "proc": "stress_mixed",
+  "level": 3,
+  "category": "mixed-prompt-sizes",
+  "params": {
+   "rounds_by_level": {
+    "low": 2,
+    "medium": 3,
+    "high": 5
+   },
+   "large_tokens": 300
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "stress",
+   "heavy"
+  ],
+  "est_out_tokens": 30,
+  "est_prompt_tokens": 700,
+  "order": 5
+ },
+ {
+  "id": "stress-04-concurrent-burst",
+  "kind": "proc",
+  "proc": "stress_concurrent",
+  "level": 3,
+  "category": "concurrency",
+  "params": {
+   "n_by_level": {
+    "low": 2,
+    "medium": 3,
+    "high": 4
+   },
+   "max_tokens": 24,
+   "needs_slots": 2
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "stress",
+   "heavy"
+  ],
+  "est_out_tokens": 100,
+  "est_prompt_tokens": 100,
+  "order": 5
+ },
+ {
+  "id": "stress-05-client-abort-recovery",
+  "kind": "proc",
+  "proc": "stress_abort",
+  "level": 3,
+  "category": "error-recovery",
+  "params": {
+   "abort_after_s": 4
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "stress",
+   "heavy"
+  ],
+  "est_out_tokens": 60,
+  "est_prompt_tokens": 40,
+  "order": 5
+ },
+ {
+  "id": "stress-06-malformed-requests",
+  "kind": "proc",
+  "proc": "stress_malformed",
+  "level": 3,
+  "category": "robustness",
+  "params": {},
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "stress",
+   "heavy"
+  ],
+  "est_out_tokens": 20,
+  "est_prompt_tokens": 0,
+  "order": 5
+ },
+ {
+  "id": "stress-07-context-overflow",
+  "kind": "proc",
+  "proc": "stress_overflow",
+  "level": 3,
+  "category": "robustness",
+  "params": {},
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "stress",
+   "heavy"
+  ],
+  "est_out_tokens": 20,
+  "est_prompt_tokens": 0,
+  "order": 5
+ },
+ {
+  "id": "stress-08-server-kill-recovery",
+  "kind": "proc",
+  "proc": "stress_kill",
+  "level": 3,
+  "category": "crash-recovery",
+  "params": {
+   "min_level": "medium"
+  },
+  "grade": {
+   "type": "none"
+  },
+  "tags": [
+   "stress",
+   "heavy"
+  ],
+  "est_out_tokens": 20,
+  "est_prompt_tokens": 20,
+  "order": 5
+ }
+]

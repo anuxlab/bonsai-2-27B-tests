@@ -1,0 +1,19 @@
+{
+  "model": {
+    "repo": "prism-ml/Ternary-Bonsai-2-27B-gguf",
+    "filename": "Ternary-Bonsai-2-27B-PQ2_0.gguf",
+    "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf/resolve/main/Ternary-Bonsai-2-27B-PQ2_0.gguf?download=true",
+    "sha256": "3907dc1658db1f78a9826bf8d5bcb8dc65db0d466388937af57f2294fae62ec1"
+  },
+  "mmproj": {
+    "filename": "Ternary-Bonsai-2-27B-mmproj-Q8_0.gguf",
+    "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf/resolve/main/Ternary-Bonsai-2-27B-mmproj-Q8_0.gguf?download=true",
+    "sha256": "6807ede61d570bb86ba34b756a0fa109edc33668604de867c6ea6d8f1d631903"
+  },
+  "runtime": {
+    "name": "PrismML-Eng/llama.cpp prism-b10777-e3de715",
+    "url": "https://github.com/PrismML-Eng/llama.cpp/releases/download/prism-b10777-e3de715/llama-prism-b10777-e3de715-bin-ubuntu-x64.tar.gz",
+    "sha256": ""
+  },
+  "_notes": "sha256 values were taken from model_hashes.txt of the 2026-11-25 run. Leave runtime.sha256 empty to only record it; fill it in to pin it. A mismatch on model/mmproj aborts the job (integrity failure)."
+}
