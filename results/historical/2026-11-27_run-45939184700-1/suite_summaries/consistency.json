@@ -1,0 +1,152 @@
+{
+  "schema": "bonsai-bench/summary/v1",
+  "total": 30,
+  "counts": {
+    "passed": 30,
+    "failed": 0,
+    "truncated": 0,
+    "timeout": 0,
+    "error": 0,
+    "grading_error": 0,
+    "skipped": 0,
+    "measured": 0
+  },
+  "n": 30,
+  "graded": 30,
+  "passed": 30,
+  "accuracy": 1.0,
+  "mean_score": 1.0,
+  "truncation_rate": 0.0,
+  "latency_s": {
+    "mean": 48.788,
+    "median": 46.279,
+    "p95": 76.005,
+    "min": 20.222,
+    "max": 84.153,
+    "n": 30
+  },
+  "tokens_per_s": {
+    "mean": 1.621,
+    "median": 1.618,
+    "p95": 1.645,
+    "min": 1.592,
+    "max": 1.655,
+    "n": 30
+  },
+  "prefill_tokens_per_s": {
+    "mean": 3.825,
+    "median": 3.854,
+    "p95": 4.056,
+    "min": 3.223,
+    "max": 4.279,
+    "n": 30
+  },
+  "tokens": {
+    "prompt": 2269,
+    "completion": 1958
+  },
+  "by_level": {
+    "2": {
+      "n": 30,
+      "graded": 30,
+      "passed": 30,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    }
+  },
+  "by_category": {
+    "consistency": {
+      "n": 30,
+      "graded": 30,
+      "passed": 30,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    }
+  },
+  "failure_classes": {},
+  "skip_reasons": {},
+  "heuristic_graded": 0,
+  "consistency": {
+    "boiling": {
+      "variants": 5,
+      "accuracy": 1.0,
+      "answer_agreement": 1.0,
+      "all_correct": true,
+      "by_variant": {
+        "irrelevant#0": "passed",
+        "original#0": "passed",
+        "paraphrase#0": "passed",
+        "reordered#0": "passed",
+        "repeat-t0.7#0": "passed"
+      }
+    },
+    "equiv": {
+      "variants": 5,
+      "accuracy": 1.0,
+      "answer_agreement": null,
+      "all_correct": true,
+      "by_variant": {
+        "div#0": "passed",
+        "divisible#0": "passed",
+        "mul#0": "passed",
+        "neg#0": "passed",
+        "wrong#0": "passed"
+      }
+    },
+    "json": {
+      "variants": 5,
+      "accuracy": 1.0,
+      "answer_agreement": 1.0,
+      "all_correct": true,
+      "by_variant": {
+        "irrelevant#0": "passed",
+        "original#0": "passed",
+        "paraphrase#0": "passed",
+        "reordered#0": "passed",
+        "repeat-t0.7#0": "passed"
+      }
+    },
+    "mean": {
+      "variants": 5,
+      "accuracy": 1.0,
+      "answer_agreement": 1.0,
+      "all_correct": true,
+      "by_variant": {
+        "irrelevant#0": "passed",
+        "original#0": "passed",
+        "paraphrase#0": "passed",
+        "reordered#0": "passed",
+        "repeat-t0.7#0": "passed"
+      }
+    },
+    "square": {
+      "variants": 5,
+      "accuracy": 1.0,
+      "answer_agreement": 1.0,
+      "all_correct": true,
+      "by_variant": {
+        "irrelevant#0": "passed",
+        "original#0": "passed",
+        "paraphrase#0": "passed",
+        "reordered#0": "passed",
+        "repeat-t0.7#0": "passed"
+      }
+    },
+    "tallest": {
+      "variants": 5,
+      "accuracy": 1.0,
+      "answer_agreement": 1.0,
+      "all_correct": true,
+      "by_variant": {
+        "irrelevant#0": "passed",
+        "original#0": "passed",
+        "paraphrase#0": "passed",
+        "reordered#0": "passed",
+        "repeat-t0.7#0": "passed"
+      }
+    }
+  },
+  "long_context": null,
+  "perf": null,
+  "failures": []
+}

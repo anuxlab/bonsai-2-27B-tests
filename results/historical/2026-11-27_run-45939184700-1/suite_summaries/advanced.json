@@ -1,0 +1,158 @@
+{
+  "schema": "bonsai-bench/summary/v1",
+  "total": 10,
+  "counts": {
+    "passed": 8,
+    "failed": 2,
+    "truncated": 0,
+    "timeout": 0,
+    "error": 0,
+    "grading_error": 0,
+    "skipped": 0,
+    "measured": 0
+  },
+  "n": 10,
+  "graded": 10,
+  "passed": 8,
+  "accuracy": 0.8,
+  "mean_score": 0.875,
+  "truncation_rate": 0.0,
+  "latency_s": {
+    "mean": 246.886,
+    "median": 231.54,
+    "p95": 390.926,
+    "min": 43.288,
+    "max": 417.216,
+    "n": 10
+  },
+  "tokens_per_s": {
+    "mean": 1.113,
+    "median": 1.115,
+    "p95": 1.124,
+    "min": 1.092,
+    "max": 1.124,
+    "n": 10
+  },
+  "prefill_tokens_per_s": {
+    "mean": 5.723,
+    "median": 5.723,
+    "p95": 6.078,
+    "min": 5.258,
+    "max": 6.106,
+    "n": 10
+  },
+  "tokens": {
+    "prompt": 1287,
+    "completion": 2567
+  },
+  "by_level": {
+    "3": {
+      "n": 9,
+      "graded": 9,
+      "passed": 7,
+      "accuracy": 0.7778,
+      "mean_score": 0.8611
+    },
+    "4": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    }
+  },
+  "by_category": {
+    "code-reading": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "constrained-summary": {
+      "n": 1,
+      "graded": 1,
+      "passed": 0,
+      "accuracy": 0.0,
+      "mean_score": 0.75
+    },
+    "decoding": {
+      "n": 1,
+      "graded": 1,
+      "passed": 0,
+      "accuracy": 0.0,
+      "mean_score": 0
+    },
+    "deduction": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "multi-constraint-writing": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "scheduling": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "structured-extraction": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "system-prompt-adherence": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "table-reasoning": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "unanswerable-calibration": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    }
+  },
+  "failure_classes": {
+    "test_failure": 2
+  },
+  "skip_reasons": {},
+  "heuristic_graded": 1,
+  "consistency": null,
+  "long_context": null,
+  "perf": null,
+  "failures": [
+    {
+      "test": "adv-03",
+      "rep": 0,
+      "status": "failed",
+      "why": "contains:quarterly 0 occurrences"
+    },
+    {
+      "test": "adv-06",
+      "rep": 0,
+      "status": "failed",
+      "why": "answer in ['bonsai tree'] got 'bonasi tree' via answer_line"
+    }
+  ]
+}

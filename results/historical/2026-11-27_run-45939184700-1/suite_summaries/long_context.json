@@ -1,0 +1,224 @@
+{
+  "schema": "bonsai-bench/summary/v1",
+  "total": 15,
+  "counts": {
+    "passed": 15,
+    "failed": 0,
+    "truncated": 0,
+    "timeout": 0,
+    "error": 0,
+    "grading_error": 0,
+    "skipped": 0,
+    "measured": 0
+  },
+  "n": 15,
+  "graded": 15,
+  "passed": 15,
+  "accuracy": 1.0,
+  "mean_score": 1.0,
+  "truncation_rate": 0.0,
+  "latency_s": {
+    "mean": 150.791,
+    "median": 93.547,
+    "p95": 415.11,
+    "min": 85.013,
+    "max": 610.36,
+    "n": 15
+  },
+  "tokens_per_s": {
+    "mean": 1.116,
+    "median": 1.111,
+    "p95": 1.151,
+    "min": 1.084,
+    "max": 1.196,
+    "n": 15
+  },
+  "prefill_tokens_per_s": {
+    "mean": 5.941,
+    "median": 5.937,
+    "p95": 6.084,
+    "min": 5.768,
+    "max": 6.099,
+    "n": 15
+  },
+  "tokens": {
+    "prompt": 33131,
+    "completion": 133
+  },
+  "by_level": {
+    "2": {
+      "n": 5,
+      "graded": 5,
+      "passed": 5,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "3": {
+      "n": 5,
+      "graded": 5,
+      "passed": 5,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "4": {
+      "n": 5,
+      "graded": 5,
+      "passed": 5,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    }
+  },
+  "by_category": {
+    "needle-end": {
+      "n": 3,
+      "graded": 3,
+      "passed": 3,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "needle-middle": {
+      "n": 3,
+      "graded": 3,
+      "passed": 3,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "needle-middle+end": {
+      "n": 3,
+      "graded": 3,
+      "passed": 3,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "needle-middle+late": {
+      "n": 3,
+      "graded": 3,
+      "passed": 3,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "needle-start": {
+      "n": 3,
+      "graded": 3,
+      "passed": 3,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    }
+  },
+  "failure_classes": {},
+  "skip_reasons": {},
+  "heuristic_graded": 0,
+  "consistency": null,
+  "long_context": {
+    "by_context_tokens": {
+      "1024": {
+        "n": 5,
+        "graded": 5,
+        "passed": 5,
+        "accuracy": 1.0,
+        "mean_score": 1.0,
+        "prompt_tokens": {
+          "mean": 1107.4,
+          "median": 1107.0,
+          "p95": 1116.6,
+          "min": 1099,
+          "max": 1118,
+          "n": 5
+        },
+        "latency_s": {
+          "mean": 111.967,
+          "median": 91.688,
+          "p95": 172.605,
+          "min": 85.013,
+          "max": 189.753,
+          "n": 5
+        }
+      },
+      "2048": {
+        "n": 5,
+        "graded": 5,
+        "passed": 5,
+        "accuracy": 1.0,
+        "mean_score": 1.0,
+        "prompt_tokens": {
+          "mean": 1955.4,
+          "median": 1955.0,
+          "p95": 1964.6,
+          "min": 1947,
+          "max": 1966,
+          "n": 5
+        },
+        "latency_s": {
+          "mean": 141.645,
+          "median": 93.547,
+          "p95": 286.154,
+          "min": 86.435,
+          "max": 331.431,
+          "n": 5
+        }
+      },
+      "4096": {
+        "n": 5,
+        "graded": 5,
+        "passed": 5,
+        "accuracy": 1.0,
+        "mean_score": 1.0,
+        "prompt_tokens": {
+          "mean": 3563.4,
+          "median": 3563.0,
+          "p95": 3572.6,
+          "min": 3555,
+          "max": 3574,
+          "n": 5
+        },
+        "latency_s": {
+          "mean": 198.76,
+          "median": 95.947,
+          "p95": 509.484,
+          "min": 88.479,
+          "max": 610.36,
+          "n": 5
+        }
+      }
+    },
+    "by_needle_position": {
+      "start": {
+        "n": 3,
+        "graded": 3,
+        "passed": 3,
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "middle+late": {
+        "n": 3,
+        "graded": 3,
+        "passed": 3,
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "end": {
+        "n": 3,
+        "graded": 3,
+        "passed": 3,
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "middle": {
+        "n": 3,
+        "graded": 3,
+        "passed": 3,
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      },
+      "middle+end": {
+        "n": 3,
+        "graded": 3,
+        "passed": 3,
+        "accuracy": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  },
+  "perf": null,
+  "failures": []
+}

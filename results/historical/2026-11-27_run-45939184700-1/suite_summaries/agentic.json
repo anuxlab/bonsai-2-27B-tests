@@ -1,0 +1,159 @@
+{
+  "schema": "bonsai-bench/summary/v1",
+  "total": 9,
+  "counts": {
+    "passed": 8,
+    "failed": 1,
+    "truncated": 0,
+    "timeout": 0,
+    "error": 0,
+    "grading_error": 0,
+    "skipped": 0,
+    "measured": 0
+  },
+  "n": 9,
+  "graded": 9,
+  "passed": 8,
+  "accuracy": 0.8889,
+  "mean_score": 0.963,
+  "truncation_rate": 0.0,
+  "latency_s": {
+    "mean": 354.858,
+    "median": 393.29,
+    "p95": 566.602,
+    "min": 37.21,
+    "max": 612.33,
+    "n": 9
+  },
+  "tokens_per_s": {
+    "mean": 1.414,
+    "median": 1.414,
+    "p95": 1.444,
+    "min": 1.382,
+    "max": 1.447,
+    "n": 2
+  },
+  "prefill_tokens_per_s": {
+    "mean": 3.797,
+    "median": 3.797,
+    "p95": 3.841,
+    "min": 3.749,
+    "max": 3.846,
+    "n": 2
+  },
+  "tokens": {
+    "prompt": 12410,
+    "completion": 2748
+  },
+  "by_level": {
+    "1": {
+      "n": 2,
+      "graded": 2,
+      "passed": 2,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "2": {
+      "n": 2,
+      "graded": 2,
+      "passed": 2,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "3": {
+      "n": 4,
+      "graded": 4,
+      "passed": 3,
+      "accuracy": 0.75,
+      "mean_score": 0.9167
+    },
+    "4": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    }
+  },
+  "by_category": {
+    "ask-for-missing-info": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "code-tool": {
+      "n": 1,
+      "graded": 1,
+      "passed": 0,
+      "accuracy": 0.0,
+      "mean_score": 0.6667
+    },
+    "error-recovery": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "file-io": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "multi-step": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "prompt-injection-in-tool-result": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "state-tracking": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "tool-restraint": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    },
+    "tool-selection": {
+      "n": 1,
+      "graded": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "mean_score": 1.0
+    }
+  },
+  "failure_classes": {
+    "test_failure": 1
+  },
+  "skip_reasons": {},
+  "heuristic_graded": 0,
+  "consistency": null,
+  "long_context": null,
+  "perf": null,
+  "failures": [
+    {
+      "test": "agent-09",
+      "rep": 0,
+      "status": "failed",
+      "why": "final:numeric==6765 parsed [20.0, 1.0, 1.0, 10946.0] from whole"
+    }
+  ]
+}
